@@ -34,6 +34,7 @@ public class settings extends AppCompatActivity {
                         settings.this, search.class);
                 finish();
                 startActivity(intent);
+                overridePendingTransition(R.anim.right_in,R.anim.left_out);
 
             }
             //else

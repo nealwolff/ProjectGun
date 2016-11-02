@@ -44,6 +44,7 @@ public class search extends AppCompatActivity {
                         search.this, settings.class);
                 finish();
                 startActivity(intent);
+                overridePendingTransition(R.anim.right_out,R.anim.left_in );
 
             }
             //else
