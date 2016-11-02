@@ -1844,8 +1844,9 @@ containing a value of this type.
         public static final int btnGo=0x7f0b0063;
         public static final int btnLoad=0x7f0b005c;
         public static final int btnLogOut=0x7f0b0065;
+        public static final int btnRegister=0x7f0b0057;
         public static final int btnSave=0x7f0b0060;
-        public static final int button2=0x7f0b0057;
+        public static final int btnSignIn=0x7f0b0058;
         public static final int buttonPanel=0x7f0b002e;
         public static final int cancel_action=0x7f0b0072;
         public static final int checkAKfiles=0x7f0b0068;
@@ -1864,8 +1865,6 @@ containing a value of this type.
         public static final int decor_content_parent=0x7f0b0043;
         public static final int default_activity_button=0x7f0b002a;
         public static final int disableHome=0x7f0b000c;
-        public static final int editText=0x7f0b0059;
-        public static final int editText2=0x7f0b005a;
         public static final int edit_query=0x7f0b0047;
         public static final int end=0x7f0b001b;
         public static final int end_padder=0x7f0b0084;
@@ -1919,7 +1918,6 @@ containing a value of this type.
         public static final int showCustom=0x7f0b000f;
         public static final int showHome=0x7f0b0010;
         public static final int showTitle=0x7f0b0011;
-        public static final int signIn=0x7f0b0058;
         public static final int spacer=0x7f0b002f;
         public static final int split_action_bar=0x7f0b0007;
         public static final int src_atop=0x7f0b0016;
@@ -1931,6 +1929,8 @@ containing a value of this type.
         public static final int tabMode=0x7f0b000b;
         public static final int text=0x7f0b0083;
         public static final int text2=0x7f0b0081;
+        public static final int textName=0x7f0b0059;
+        public static final int textPassword=0x7f0b005a;
         public static final int textSpacerNoButtons=0x7f0b0037;
         public static final int textView=0x7f0b0056;
         public static final int textView2=0x7f0b005e;

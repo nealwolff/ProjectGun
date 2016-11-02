@@ -42,9 +42,9 @@
         android:text="Register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button2"
+        android:id="@+id/btnRegister"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/signIn"
+        android:layout_alignStart="@+id/btnSignIn"
         android:layout_marginBottom="44dp"
         android:minHeight="0dp"
         android:backgroundTint="@android:color/holo_blue_bright"
@@ -55,8 +55,8 @@
         android:text="Sign In"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/signIn"
-        android:layout_above="@+id/button2"
+        android:id="@+id/btnSignIn"
+        android:layout_above="@+id/btnRegister"
         android:layout_centerHorizontal="true"
         android:textColorLink="@android:color/holo_green_dark"
         android:elevation="0dp"
@@ -71,12 +71,13 @@
         android:inputType="textPersonName"
         android:text="Enter Username"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/textName"
         android:layout_marginTop="70dp"
         android:layout_below="@+id/textView6"
         android:layout_centerHorizontal="true"
-        android:textAlignment="center" />
-
+        android:textAlignment="center"
+        android:singleLine="true"
+        android:selectAllOnFocus="true" />
 
 
     <EditText
@@ -84,11 +85,12 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:layout_below="@+id/editText"
-        android:layout_alignEnd="@+id/editText"
-        android:layout_marginTop="17dp"
-        android:id="@+id/editText2"
+        android:id="@+id/textPassword"
         android:text="sample"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:singleLine="true"
+        android:layout_centerVertical="true"
+        android:layout_alignEnd="@+id/textView6"
+        android:selectAllOnFocus="true" />
 
 </RelativeLayout>

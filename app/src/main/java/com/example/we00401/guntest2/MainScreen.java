@@ -1,13 +1,10 @@
 package com.example.we00401.guntest2;
 
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.GestureDetector;
 import android.view.View;
 import android.widget.*;
 import android.content.*;
-import android.view.MotionEvent;
 
 public class MainScreen extends AppCompatActivity {
 
@@ -19,13 +16,36 @@ public class MainScreen extends AppCompatActivity {
 
 
 
-        Button btn1 = (Button)findViewById(R.id.signIn);
+        //log in button
+        Button btn1 = (Button)findViewById(R.id.btnSignIn);
 
+        //logs in the user and loads the search page
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(MainScreen.this, search.class));
             }
         });
+
+        //clears the name feild when clicked
+        final EditText textName = (EditText)findViewById(R.id.textName);
+
+        textName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textName.setText("");
+            }
+        });
+
+        final EditText textPassword = (EditText)findViewById(R.id.textPassword);
+
+        textPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                textPassword.setText("");
+            }
+        });
+
+
     }
 
 

@@ -8,12 +8,16 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.view.View.OnClickListener;
 public class search extends AppCompatActivity {
     private GestureDetectorCompat gestureObject;
-
+    boolean first = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
@@ -26,7 +30,21 @@ public class search extends AppCompatActivity {
                 startActivity(new Intent(search.this, SavedSearch.class));
             }
         });
+
+        final EditText searchText = (EditText)findViewById(R.id.fieldSearch);
+
+        searchText.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(first == true ) {
+                    searchText.setText("");
+                    first = false;
+                }
+            }
+        });
     }
+
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
@@ -47,11 +65,6 @@ public class search extends AppCompatActivity {
                 overridePendingTransition(R.anim.right_out,R.anim.left_in );
 
             }
-            //else
-            // if (event2.getX()<event1.getX()){
-
-
-            // }
             return true;
         }
     }
