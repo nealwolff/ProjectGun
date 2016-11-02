@@ -23,6 +23,7 @@
         </activity>
         <activity android:name="com.example.we00401.guntest2.search" />
         <activity android:name="com.example.we00401.guntest2.SavedSearch" />
+        <activity android:name="com.example.we00401.guntest2.settings" />
     </application>
 
 </manifest>

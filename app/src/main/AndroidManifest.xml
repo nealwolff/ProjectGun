@@ -16,8 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".search" />
-        <activity android:name=".SavedSearch"></activity>
-
+        <activity android:name=".SavedSearch" />
+        <activity android:name=".settings"></activity>
     </application>
 
 </manifest>

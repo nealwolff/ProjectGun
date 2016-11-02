@@ -6,26 +6,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
 
-public class search extends AppCompatActivity {
+public class settings extends AppCompatActivity {
     private GestureDetectorCompat gestureObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_settings);
 
-        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
-
-        Button btn1 = (Button)findViewById(R.id.btnSave);
-
-        btn1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivity(new Intent(search.this, SavedSearch.class));
-            }
-        });
+        gestureObject = new GestureDetectorCompat(this, new settings.LearnGesture());
     }
 
     @Override
@@ -39,9 +29,9 @@ public class search extends AppCompatActivity {
         public boolean onFling(MotionEvent event1, MotionEvent event2,
                                float velocityX, float velocityY){
 
-            if(event2.getX() > event1.getX()){
+            if(event2.getX() < event1.getX()){
                 Intent intent = new Intent(
-                        search.this, settings.class);
+                        settings.this, search.class);
                 finish();
                 startActivity(intent);
 
