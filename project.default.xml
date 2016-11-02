@@ -37,8 +37,8 @@
       <component name="PropertiesComponent">
         <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
         <property name="settings.editor.selected.configurable" value="vcs.Git" />
-        <property name="last_opened_file_path" value="$USER_HOME$/AppData/Local/Programs/Git/bin/git.exe" />
         <property name="settings.editor.splitter.proportion" value="0.2" />
+        <property name="last_opened_file_path" value="$USER_HOME$/AppData/Local/Programs/Git/bin/git.exe" />
       </component>
       <component name="RunManager">
         <configuration default="true" type="Application" factoryName="Application">
