@@ -11,10 +11,10 @@
     tools:context="com.example.we00401.guntest2.search">
 
     <Button
-        android:text="Save Search"
+        android:text="Load Search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnSave"
+        android:id="@+id/btnLoad"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 
@@ -26,7 +26,7 @@
         android:layout_marginBottom="14dp"
         android:layout_below="@+id/fieldSearch"
         android:layout_marginTop="15dp"
-        android:layout_above="@+id/btnSave"
+        android:layout_above="@+id/btnLoad"
         android:id="@+id/foundView" />
 
     <EditText
@@ -48,4 +48,22 @@
         android:id="@+id/btnGo"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Save Search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnSave"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/fieldSearch" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_below="@+id/foundView"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textSave"
+        android:layout_toStartOf="@+id/btnSave" />
 </RelativeLayout>

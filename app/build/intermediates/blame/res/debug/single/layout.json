@@ -24,12 +24,12 @@
         "source": "C:\\Users\\Flandre\\Desktop\\GunTest2\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout\\abc_screen_simple_overlay_action_mode.xml"
     },
     {
-        "merged": "C:\\Users\\Flandre\\Desktop\\GunTest2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_select_dialog_material.xml",
-        "source": "C:\\Users\\Flandre\\Desktop\\GunTest2\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout\\abc_select_dialog_material.xml"
-    },
-    {
         "merged": "C:\\Users\\Flandre\\Desktop\\GunTest2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_saved_search.xml",
         "source": "C:\\Users\\Flandre\\Desktop\\GunTest2\\app\\src\\main\\res\\layout\\activity_saved_search.xml"
+    },
+    {
+        "merged": "C:\\Users\\Flandre\\Desktop\\GunTest2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_select_dialog_material.xml",
+        "source": "C:\\Users\\Flandre\\Desktop\\GunTest2\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout\\abc_select_dialog_material.xml"
     },
     {
         "merged": "C:\\Users\\Flandre\\Desktop\\GunTest2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_popup_menu_item_layout.xml",

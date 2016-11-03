@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.view.View.OnClickListener;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+
 public class search extends AppCompatActivity {
     private GestureDetectorCompat gestureObject;
     boolean first = true;
@@ -23,11 +26,39 @@ public class search extends AppCompatActivity {
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 
-        Button btn1 = (Button)findViewById(R.id.btnSave);
+        Button btn1 = (Button)findViewById(R.id.btnLoad);
 
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(search.this, SavedSearch.class));
+            }
+        });
+
+
+
+
+        Button btnSave =  (Button)findViewById(R.id.btnSave);
+        final EditText textSave = (EditText)findViewById(R.id.textSave);
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                EditText textSave = (EditText) findViewById(R.id.textSave);
+                String temp = textSave.getText().toString();
+
+                if (temp.matches("")) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(search.this).create(); //Read Update
+                    alertDialog.setTitle("error");
+                    alertDialog.setMessage("You must enter a save name");
+
+                    alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // here you can add functions
+                        }
+                    });
+
+                    alertDialog.show();  //<-- See This!
+                }
+
             }
         });
 
@@ -43,6 +74,8 @@ public class search extends AppCompatActivity {
             }
         });
     }
+
+
 
 
 
