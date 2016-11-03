@@ -6,8 +6,12 @@
           <option name="url" value="https://github.com/nealwolff/ProjectGun.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://github.com/0nlyWan/DistributedWebProject.git" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
-    <option name="cloneParentDir" value="C:\Users\we00401\projectgun" />
+    <option name="cloneParentDir" value="$USER_HOME$/Documents/ProjectGoon" />
   </component>
 </application>
