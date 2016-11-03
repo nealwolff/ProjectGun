@@ -558,11 +558,11 @@ int id buttonPanel 0x7f0b002e
 int id cancel_action 0x7f0b0072
 int id checkAKfiles 0x7f0b0068
 int id checkArmslist 0x7f0b0069
-int id checkBox8 0x7f0b006d
-int id checkCal 0x7f0b006a
-int id checkFAL 0x7f0b006b
+int id checkCal 0x7f0b006b
+int id checkFAL 0x7f0b006d
 int id checkGunbroker 0x7f0b0067
-int id checkGunsA 0x7f0b006c
+int id checkGunsA 0x7f0b006a
+int id checkStrict 0x7f0b006c
 int id checkbox 0x7f0b003c
 int id chronometer 0x7f0b007a
 int id collapseActionView 0x7f0b001e

@@ -17,7 +17,7 @@ public class SavedSearch extends AppCompatActivity {
 
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(SavedSearch.this, search.class));
+                finish();
             }
         });
     }

@@ -60,7 +60,6 @@ public class search extends AppCompatActivity {
             if(event2.getX() > event1.getX()){
                 Intent intent = new Intent(
                         search.this, settings.class);
-                finish();
                 startActivity(intent);
                 overridePendingTransition(R.anim.right_out,R.anim.left_in );
 

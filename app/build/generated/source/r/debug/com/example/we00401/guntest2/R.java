@@ -1851,11 +1851,11 @@ containing a value of this type.
         public static final int cancel_action=0x7f0b0072;
         public static final int checkAKfiles=0x7f0b0068;
         public static final int checkArmslist=0x7f0b0069;
-        public static final int checkBox8=0x7f0b006d;
-        public static final int checkCal=0x7f0b006a;
-        public static final int checkFAL=0x7f0b006b;
+        public static final int checkCal=0x7f0b006b;
+        public static final int checkFAL=0x7f0b006d;
         public static final int checkGunbroker=0x7f0b0067;
-        public static final int checkGunsA=0x7f0b006c;
+        public static final int checkGunsA=0x7f0b006a;
+        public static final int checkStrict=0x7f0b006c;
         public static final int checkbox=0x7f0b003c;
         public static final int chronometer=0x7f0b007a;
         public static final int collapseActionView=0x7f0b001e;

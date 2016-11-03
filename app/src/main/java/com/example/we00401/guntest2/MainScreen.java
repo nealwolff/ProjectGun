@@ -36,6 +36,8 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
+
+        //clears the password feild when focused
         final EditText textPassword = (EditText)findViewById(R.id.textPassword);
 
         textPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
