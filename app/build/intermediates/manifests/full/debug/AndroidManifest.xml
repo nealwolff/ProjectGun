@@ -8,6 +8,8 @@
         android:minSdkVersion="19"
         android:targetSdkVersion="25" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name="com.example.we00401.guntest2.globals"
         android:allowBackup="true"
