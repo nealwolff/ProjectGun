@@ -1,7 +1,14 @@
 <application>
-  <component name="FileTypeManager" version="14">
-    <ignoreFiles list="*.hprof;*.pyc;*.pyo;*.rbc;*~;.DS_Store;.bundle;.git;.hg;.svn;.tox;CVS;RCS;SCCS;__pycache__;_svn;rcs;vssver.scc;vssver2.scc;" />
+  <component name="FileTypeManager" version="17">
+    <ignoreFiles list="*.hprof;*.pyc;*.pyo;*.rbc;*~;.DS_Store;.git;.hg;.svn;CVS;RCS;SCCS;__pycache__;_svn;rcs;vssver.scc;vssver2.scc;" />
     <extensionMap>
+      <mapping pattern="india" type="Images" />
+      <mapping pattern="New_Zealand" type="Images" />
+      <mapping pattern="portugal" type="Images" />
+      <mapping pattern="china" type="Images" />
+      <mapping pattern="Australia" type="Images" />
+      <mapping pattern="america" type="Images" />
+      <mapping pattern="portugle" type="Images" />
       <mapping pattern="btn" type="XML" />
       <mapping pattern="back" type="XML" />
     </extensionMap>
