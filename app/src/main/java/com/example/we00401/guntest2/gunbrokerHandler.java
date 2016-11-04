@@ -96,7 +96,6 @@ public class gunbrokerHandler extends website {
             }
 
         }
-        print();
 
     }//end of constructor
 
