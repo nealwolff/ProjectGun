@@ -44,6 +44,9 @@ public class customAdapter extends ArrayAdapter<listings> {
         TextView txtPrice = (TextView) convertView.findViewById(R.id.txtPrice);
         txtPrice.setText(listing.getPrice());
 
+        TextView txtURL = (TextView) convertView.findViewById(R.id.txtURL);
+        txtURL.setText(listing.getURL());
+
         return convertView;
     }
 }

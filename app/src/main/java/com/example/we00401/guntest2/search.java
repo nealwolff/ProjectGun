@@ -34,8 +34,8 @@ public class search extends AppCompatActivity {
         arrayList = new ArrayList<>();
         lv = (ListView) findViewById(R.id.foundView);
 
-        listings kek = new listings("http://i0.kym-cdn.com/photos/images/facebook/000/617/382/1d8.png","topkek","$100");
-        listings kek2 = new listings("https://c.thumbs.redditmedia.com/tSkMnJtm4xt_e4QD.png","kek","$1340");
+        listings kek = new listings("http://i0.kym-cdn.com/photos/images/facebook/000/617/382/1d8.png","topkek","$100","http://google.com");
+        listings kek2 = new listings("https://c.thumbs.redditmedia.com/tSkMnJtm4xt_e4QD.png","kek","$1340","http://google.com");
         arrayList.add(kek);
         arrayList.add(kek2);
 
