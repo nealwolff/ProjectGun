@@ -1,5 +1,6 @@
 package com.example.we00401.guntest2;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,6 +11,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 abstract public class website{
+    private List <listings>siteListings = new LinkedList<listings>();
+
     public List<String> getURL(String theURL) {
 
         URL url;
@@ -38,6 +41,27 @@ abstract public class website{
         }
 
         return HTMLfile;
+
+    }
+
+    public List<listings> getListings(){
+        return siteListings;
+    }
+
+    public void add(listings listing){
+        siteListings.add(listing);
+    }
+
+    //for debugging
+    public void print(){
+        for (int i =0;i<siteListings.size();i++){
+            listings kek= siteListings.get(i);
+            System.out.println(kek.getName());
+            System.out.println(kek.getImage());
+            System.out.println(kek.getURL());
+            System.out.println(kek.getPrice());
+            System.out.println();
+        }
 
     }
 }
