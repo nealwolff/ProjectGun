@@ -65,22 +65,34 @@ public class search extends AppCompatActivity {
             public void onClick(View v) {
                 EditText txtSearch = (EditText) findViewById(R.id.fieldSearch);
                 String temp = txtSearch.getText().toString();
-                //testHandler test = new testHandler();
-                //if the gunbroker checkbox is clicked, saerch gunbroker.
-                gunbrokerHandler GBH = new gunbrokerHandler(temp);
-                List<listings> GBList = GBH.getListings();
-
-                //get the gunbroker listings
-                for (int i = 0; i < GBList.size(); i++) {
-                   listings listing = GBList.get(i);
-                    arrayList.add(listing);
+                temp = temp.trim();
+                //if no terms entered, notify
+                if(temp.equals("")) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(search.this).create();
+                    alertDialog.setTitle("error");
+                    alertDialog.setMessage("must enter data");
+                    alertDialog.show();
                 }
-                /*
-                AlertDialog alertDialog = new AlertDialog.Builder(search.this).create();
-                alertDialog.setTitle("error");
-                alertDialog.setMessage(temp);
-                alertDialog.show();
-                */
+                else {
+
+
+
+
+                    temp=temp.replaceAll("\\s","+");
+                    //testHandler test = new testHandler();
+                    //if the gunbroker checkbox is clicked, saerch gunbroker.
+                    gunbrokerHandler GBH = new gunbrokerHandler(temp);
+                    List<listings> GBList = GBH.getListings();
+
+                    //get the gunbroker listings
+                    for (int i = 0; i < GBList.size(); i++) {
+                        listings listing = GBList.get(i);
+                        arrayList.add(listing);
+                    }
+                }
+
+
+
             }
         });
 
@@ -94,7 +106,7 @@ public class search extends AppCompatActivity {
             public void onClick(View v) {
                 EditText textSave = (EditText) findViewById(R.id.textSave);
                 String temp = textSave.getText().toString();
-
+                temp.trim();
                 if (temp.matches("")) {
                     AlertDialog alertDialog = new AlertDialog.Builder(search.this).create();
                     alertDialog.setTitle("error");

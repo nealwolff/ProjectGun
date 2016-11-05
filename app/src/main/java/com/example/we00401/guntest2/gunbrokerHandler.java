@@ -41,23 +41,10 @@ public class gunbrokerHandler extends website {
                         //tempName = temp2.replaceAll("\\<.*?>","");
                         //tempName = tempName.trim();
                     }
-                    /*
+
+                    //gets the name
                     if(temp2.contains("BItmTLnk")){
                         tempName=android.text.Html.fromHtml(temp2).toString();
-                    }
-                    */
-                    //gets the name
-
-                    if(temp2.contains("BItmTLnk")){
-                        String regex = ">([^\"]*)</";
-                        Pattern pat = Pattern.compile(regex);
-                        Matcher m = pat.matcher(temp2);
-                        if(m.find()) {
-                            tempName =m.group(1);
-                        }
-                        if(tempName==""){
-                            tempName=Search;
-                        }
                     }
 
                     //gets the image
