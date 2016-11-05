@@ -15,6 +15,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.widget.ListView;
 import java.util.ArrayList;
+import java.util.List;
 
 public class search extends AppCompatActivity {
     private GestureDetectorCompat gestureObject;
@@ -34,10 +35,7 @@ public class search extends AppCompatActivity {
         arrayList = new ArrayList<>();
         lv = (ListView) findViewById(R.id.foundView);
 
-        listings kek = new listings("http://i0.kym-cdn.com/photos/images/facebook/000/617/382/1d8.png","topkek","$100","http://google.com");
-        listings kek2 = new listings("https://c.thumbs.redditmedia.com/tSkMnJtm4xt_e4QD.png","kek","$1340","http://google.com");
-        arrayList.add(kek);
-        arrayList.add(kek2);
+
 
         runOnUiThread(new Runnable() {
             @Override
@@ -61,6 +59,31 @@ public class search extends AppCompatActivity {
             }
         });
 
+        Button btnGO = (Button)findViewById(R.id.btnGo);
+
+        btnGO.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                EditText txtSearch = (EditText) findViewById(R.id.fieldSearch);
+                String temp = txtSearch.getText().toString();
+                //testHandler test = new testHandler();
+                //if the gunbroker checkbox is clicked, saerch gunbroker.
+                gunbrokerHandler GBH = new gunbrokerHandler(temp);
+                List<listings> GBList = GBH.getListings();
+
+                //get the gunbroker listings
+                for (int i = 0; i < GBList.size(); i++) {
+                   listings listing = GBList.get(i);
+                    arrayList.add(listing);
+                }
+                /*
+                AlertDialog alertDialog = new AlertDialog.Builder(search.this).create();
+                alertDialog.setTitle("error");
+                alertDialog.setMessage(temp);
+                alertDialog.show();
+                */
+            }
+        });
+
 
 
 
@@ -73,7 +96,7 @@ public class search extends AppCompatActivity {
                 String temp = textSave.getText().toString();
 
                 if (temp.matches("")) {
-                    AlertDialog alertDialog = new AlertDialog.Builder(search.this).create(); //Read Update
+                    AlertDialog alertDialog = new AlertDialog.Builder(search.this).create();
                     alertDialog.setTitle("error");
                     alertDialog.setMessage("You must enter a save name");
 
@@ -83,7 +106,7 @@ public class search extends AppCompatActivity {
                         }
                     });
 
-                    alertDialog.show();  //<-- See This!
+                    alertDialog.show();
                 }
 
             }

@@ -1,6 +1,8 @@
 package com.example.we00401.guntest2;
 
 
+import android.os.StrictMode;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,6 +16,8 @@ abstract public class website{
     private List <listings>siteListings = new LinkedList<listings>();
 
     public List<String> getURL(String theURL) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         URL url;
         List <String> HTMLfile = new LinkedList<String>();

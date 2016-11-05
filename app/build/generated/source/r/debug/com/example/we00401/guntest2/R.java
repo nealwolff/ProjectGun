@@ -1841,11 +1841,11 @@ containing a value of this type.
         public static final int always=0x7f0b001d;
         public static final int beginning=0x7f0b001a;
         public static final int bottom=0x7f0b0022;
-        public static final int btnGo=0x7f0b0062;
+        public static final int btnGo=0x7f0b0064;
         public static final int btnLoad=0x7f0b005c;
         public static final int btnLogOut=0x7f0b0066;
         public static final int btnRegister=0x7f0b0057;
-        public static final int btnSave=0x7f0b0063;
+        public static final int btnSave=0x7f0b0062;
         public static final int btnSignIn=0x7f0b0058;
         public static final int buttonPanel=0x7f0b002e;
         public static final int cancel_action=0x7f0b0077;
@@ -1932,7 +1932,7 @@ containing a value of this type.
         public static final int text2=0x7f0b0086;
         public static final int textName=0x7f0b0059;
         public static final int textPassword=0x7f0b005a;
-        public static final int textSave=0x7f0b0064;
+        public static final int textSave=0x7f0b0063;
         public static final int textSpacerNoButtons=0x7f0b0037;
         public static final int textView=0x7f0b0056;
         public static final int textView2=0x7f0b005e;

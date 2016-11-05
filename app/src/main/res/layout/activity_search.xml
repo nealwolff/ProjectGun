@@ -42,14 +42,6 @@
         android:selectAllOnFocus="true" />
 
     <Button
-        android:text="Go"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnGo"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
         android:text="Save Search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,4 +58,13 @@
         android:layout_alignParentStart="true"
         android:id="@+id/textSave"
         android:layout_toStartOf="@+id/btnSave" />
+
+    <Button
+        android:text="Go"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnGo"
+        android:layout_alignBaseline="@+id/fieldSearch"
+        android:layout_alignBottom="@+id/fieldSearch"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
