@@ -1,6 +1,10 @@
 [
     {
-        "merged": "C:\\Users\\Flandre\\Desktop\\GunTest\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi\\ic_launcher.png",
-        "source": "C:\\Users\\Flandre\\Desktop\\GunTest\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+        "merged": "/Users/Joshua/Documents/ProjectGoon2.0/ProjectGun/C:\\Users\\Flandre\\Desktop\\GunTest\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi\\ic_launcher.png",
+        "source": "/Users/Joshua/Documents/ProjectGoon2.0/ProjectGun/C:\\Users\\Flandre\\Desktop\\GunTest\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "/Users/Joshua/Documents/ProjectGoon2.0/ProjectGun/app/build/intermediates/res/merged/debug/mipmap-mdpi/ic_launcher.png",
+        "source": "/Users/Joshua/Documents/ProjectGoon2.0/ProjectGun/app/src/main/res/mipmap-mdpi/ic_launcher.png"
     }
 ]
