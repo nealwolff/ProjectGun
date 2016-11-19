@@ -16,6 +16,9 @@ import android.content.DialogInterface;
 import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
+import android.view.inputmethod.InputMethodManager;
+import android.content.Context;
+import android.widget.Toast;
 
 public class search extends AppCompatActivity {
     private GestureDetectorCompat gestureObject;
@@ -23,7 +26,7 @@ public class search extends AppCompatActivity {
 
     //array list of listings
     ArrayList<listings> arrayList;
-    ListView lv;
+    ListView lv; //The listveiw that displays the listings
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,32 +66,65 @@ public class search extends AppCompatActivity {
 
         btnGO.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                //hide the keyboard after the user presses "go"
+                InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+
+
+                //get the text from the search field
                 EditText txtSearch = (EditText) findViewById(R.id.fieldSearch);
-                String temp = txtSearch.getText().toString();
-                temp = temp.trim();
+                String input = txtSearch.getText().toString();
+                final String searchTerm = input.trim(); //clear the text of any whitespace
                 //if no terms entered, notify
-                if(temp.equals("")) {
+                if(searchTerm.equals("")) {
                     AlertDialog alertDialog = new AlertDialog.Builder(search.this).create();
                     alertDialog.setTitle("error");
                     alertDialog.setMessage("must enter data");
                     alertDialog.show();
                 }
                 else {
+                    //Ask the user to select categories to search.
+
+                    AlertDialog.Builder alt_bld = new AlertDialog.Builder(search.this);
+                    alt_bld.setTitle("Select a category");
+                    final String[] grpname = {" Semi-Auto pistols "," Revolvers "," Bolt-Action rifles "," Semi-Auto rifles "};
+                    alt_bld.setSingleChoiceItems(grpname, -1, new DialogInterface
+                            .OnClickListener() {
+                        public void onClick(DialogInterface dialog, int item) {
+                            Toast.makeText(getApplicationContext(),
+                                    "Searching " + searchTerm + " in \""+grpname[item] +"\"", Toast.LENGTH_LONG).show();
 
 
+                            String temp=searchTerm.replaceAll("\\s","+");
+                            //testHandler test = new testHandler();
+                            //if the gunbroker checkbox is clicked, search gunbroker.
+                            gunbrokerHandler GBH = new gunbrokerHandler(temp,grpname[item]);
+                            List<listings> GBList = GBH.getListings();
+
+                            //get the gunbroker listings
+                            for (int i = 0; i < GBList.size(); i++) {
+                                listings listing = GBList.get(i);
+                                arrayList.add(listing);
+                            }
+
+                            //refresh the list view
+                            lv.invalidateViews();
+
+                            if(arrayList.size()==0){
+                                Toast.makeText(getApplicationContext(),
+                                        "No Items found", Toast.LENGTH_LONG).show();
+                            }
+
+                            dialog.dismiss();
+
+                        }
+                    });
+                    AlertDialog alert = alt_bld.create();
+                    alert.show();
 
 
-                    temp=temp.replaceAll("\\s","+");
-                    //testHandler test = new testHandler();
-                    //if the gunbroker checkbox is clicked, saerch gunbroker.
-                    gunbrokerHandler GBH = new gunbrokerHandler(temp);
-                    List<listings> GBList = GBH.getListings();
-
-                    //get the gunbroker listings
-                    for (int i = 0; i < GBList.size(); i++) {
-                        listings listing = GBList.get(i);
-                        arrayList.add(listing);
-                    }
                 }
 
 
@@ -106,7 +142,7 @@ public class search extends AppCompatActivity {
             public void onClick(View v) {
                 EditText textSave = (EditText) findViewById(R.id.textSave);
                 String temp = textSave.getText().toString();
-                temp.trim();
+                temp=temp.replaceAll("\\s","");
                 if (temp.matches("")) {
                     AlertDialog alertDialog = new AlertDialog.Builder(search.this).create();
                     alertDialog.setTitle("error");
@@ -136,10 +172,6 @@ public class search extends AppCompatActivity {
             }
         });
     }
-
-
-
-
 
     @Override
     public boolean onTouchEvent(MotionEvent event){

@@ -6,8 +6,22 @@ import java.util.regex.Pattern;
 
 public class gunbrokerHandler extends website {
 
-    public gunbrokerHandler(String Search){
-        String URL = "http://www.gunbroker.com/Auction/BrowseItems2.aspx?Keywords=" + Search +"&Cats=0";
+    public gunbrokerHandler(String Search, String cat){
+
+        String URL = "http://www.gunbroker.com/Auction/BrowseItems2.aspx?Keywords=" + Search;
+
+        if(cat.contains("Semi-Auto pistols")){
+            URL += "&Cats=3026";
+        }else if(cat.contains("Revolvers")){
+            URL += "&Cats=2325";
+        }else if(cat.contains("Semi-Auto rifles")){
+            URL += "&Cats=3024";
+        }else if(cat.contains("Bolt-Action rifles")){
+            URL += "&Cats=3022";
+        }else{
+            URL += "&Cats=0";
+        }
+
         List<String>HTMLfile = getURL(URL);
 
 
