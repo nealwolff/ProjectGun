@@ -108,7 +108,7 @@ public class search extends AppCompatActivity {
                             //get the gunbroker listings
                             for (int i = 0; i < GBList.size(); i++) {
                                 listings listing = GBList.get(i);
-                                arrayList.add(listing);
+                                arrayList.add(0,listing);
                             }
                             //create a linked list of strings containing all the urls for duplicate comparison
                             ArrayList<String> urls = new ArrayList<String>();
