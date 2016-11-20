@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+//this adapter allows for our custom list view to show.
 public class customAdapter extends ArrayAdapter<listings> {
     ArrayList<listings> listing;
     Context context;

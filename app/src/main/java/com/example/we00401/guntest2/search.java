@@ -100,7 +100,9 @@ public class search extends AppCompatActivity {
                             String temp=searchTerm.replaceAll("\\s","+");
                             //testHandler test = new testHandler();
                             //if the gunbroker checkbox is clicked, search gunbroker.
-                            gunbrokerHandler GBH = new gunbrokerHandler(temp,grpname[item]);
+
+                            ArrayList<String> compares = getGlobalArraylist();
+                            gunbrokerHandler GBH = new gunbrokerHandler(temp,grpname[item],compares);
                             List<listings> GBList = GBH.getListings();
 
                             //get the gunbroker listings
@@ -108,7 +110,13 @@ public class search extends AppCompatActivity {
                                 listings listing = GBList.get(i);
                                 arrayList.add(listing);
                             }
-
+                            //create a linked list of strings containing all the urls for duplicate comparison
+                            ArrayList<String> urls = new ArrayList<String>();
+                            for(int i = 0;i<arrayList.size();i++){
+                                urls.add(arrayList.get(i).getURL());
+                            }
+                            //set the global arraylist containing URLS to the current arraylsit
+                            setGlobalArraylist(urls);
                             //refresh the list view
                             lv.invalidateViews();
 
@@ -171,6 +179,14 @@ public class search extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    //function to set the arraylist.
+    public void setGlobalArraylist(ArrayList<String> arraylist){
+        ((globals) this.getApplication()).setArrayList(arraylist);
+    }
+    public ArrayList<String> getGlobalArraylist(){
+        return ((globals) this.getApplication()).getArraylist();
     }
 
     @Override

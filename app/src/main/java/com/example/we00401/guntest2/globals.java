@@ -2,8 +2,12 @@ package com.example.we00401.guntest2;
 
 import android.app.Application;
 
+import java.util.ArrayList;
+
 public class globals extends Application {
 
+    //array list of listings
+    private ArrayList<String> arrayList = new ArrayList<>();
     private boolean strict =false;
     private boolean gun = true;
     private boolean AK = true;
@@ -35,6 +39,12 @@ public class globals extends Application {
     public boolean getFAL() {
         return FAL;
     }
+    public ArrayList<String> getArraylist() {
+        if(arrayList == null){
+            arrayList.add("empty");
+        }
+        return arrayList;
+    }
 
     //setters
     public void setStrict(boolean input) {
@@ -58,6 +68,9 @@ public class globals extends Application {
     }
     public void setFAL(boolean input) {
         FAL=input;
+    }
+    public void setArrayList(ArrayList<String> input) {
+        arrayList = input;
     }
 
 }

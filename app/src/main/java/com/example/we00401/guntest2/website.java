@@ -12,6 +12,7 @@ import java.net.URLConnection;
 import java.util.LinkedList;
 import java.util.List;
 
+
 abstract public class website{
     private List <listings>siteListings = new LinkedList<listings>();
 

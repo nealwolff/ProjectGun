@@ -1,14 +1,14 @@
 package com.example.we00401.guntest2;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class gunbrokerHandler extends website {
+    public gunbrokerHandler(String Search, String cat, ArrayList<String>urls){
 
-    public gunbrokerHandler(String Search, String cat){
-
-        String URL = "http://www.gunbroker.com/Auction/BrowseItems2.aspx?Keywords=" + Search;
+        String URL = "http://www.gunbroker.com/Auction/BrowseItems2.aspx?Keywords=" + Search +"&Sort=3";
 
         if(cat.contains("Semi-Auto pistols")){
             URL += "&Cats=3026";
@@ -51,9 +51,15 @@ public class gunbrokerHandler extends website {
                             tempURL = "http://www.gunbroker.com" + m.group(1);
                         }
 
-                        //gets the name
-                        //tempName = temp2.replaceAll("\\<.*?>","");
-                        //tempName = tempName.trim();
+                    }
+
+                    //if the item numer, matched by the URL, is already stored
+                    //then quit, no point searching if the rest of the items are
+                    //duplicate items.
+                    if(urls.contains(tempURL)){
+                        i = HTMLfile.size();
+                        tempURL="BREAK"; //check is at the end of the for loop to prevent adding this found item to the list
+                        break;
                     }
 
                     //gets the name
@@ -93,7 +99,9 @@ public class gunbrokerHandler extends website {
                 workListing = new listings(tempImage,tempName,tempPrice, tempURL);
 
                 //add the listing to the list
-                add(workListing);
+                //if the item has already been added, do not.
+                if(!tempURL.equals("BREAK"))
+                    add(workListing);
             }
 
         }
