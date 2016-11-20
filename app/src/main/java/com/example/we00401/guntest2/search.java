@@ -16,6 +16,7 @@ import android.content.DialogInterface;
 import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedList;
 import android.view.inputmethod.InputMethodManager;
 import android.content.Context;
 import android.widget.Toast;
@@ -100,30 +101,50 @@ public class search extends AppCompatActivity {
                             String temp=searchTerm.replaceAll("\\s","+");
                             //testHandler test = new testHandler();
                             //if the gunbroker checkbox is clicked, search gunbroker.
+                            boolean check = true;
+                            int pagenum=0;
+                            //Linked list of lists of listings, used to store the lists of each page.
+                            LinkedList<List<listings>> allPages = new  LinkedList<List<listings>>();
+                            while(check) {
+                                pagenum++;
+                                ArrayList<String> compares = getGlobalArraylist();
+                                gunbrokerHandler GBH = new gunbrokerHandler(temp, grpname[item], compares, pagenum);
+                                List<listings> GBList = GBH.getListings();
 
-                            ArrayList<String> compares = getGlobalArraylist();
-                            gunbrokerHandler GBH = new gunbrokerHandler(temp,grpname[item],compares);
-                            List<listings> GBList = GBH.getListings();
+                                if (GBList.size() == 0) {
+                                    break;
+                                }
+                                allPages.add(GBList);
+                            }
 
-                            //get the gunbroker listings
-                            for (int i = GBList.size()-1; i >= 0; i--) {
-                                listings listing = GBList.get(i);
-                                arrayList.add(0,listing);
+                            for(int j = allPages.size()-1;j>=0;j--) {
+                                if(allPages.size()==0){
+                                    Toast.makeText(getApplicationContext(),
+                                            "No Items found", Toast.LENGTH_LONG).show();
+                                    break;
+                                }
+                                List<listings> GBList = allPages.get(j);
+                                //get the gunbroker listings
+                                for (int i = GBList.size() - 1; i >= 0; i--) {
+                                    listings listing = GBList.get(i);
+                                    arrayList.add(0, listing);
+                                }
+                                //create a linked list of strings containing all the urls for duplicate comparison
+                                ArrayList<String> urls = new ArrayList<String>();
+                                for (int i = 0; i < arrayList.size(); i++) {
+                                    urls.add(arrayList.get(i).getURL());
+                                }
+                                //set the global arraylist containing URLS to the current arraylsit
+                                setGlobalArraylist(urls);
+                                //refresh the list view
+                                lv.invalidateViews();
                             }
-                            //create a linked list of strings containing all the urls for duplicate comparison
-                            ArrayList<String> urls = new ArrayList<String>();
-                            for(int i = 0;i<arrayList.size();i++){
-                                urls.add(arrayList.get(i).getURL());
-                            }
-                            //set the global arraylist containing URLS to the current arraylsit
-                            setGlobalArraylist(urls);
-                            //refresh the list view
-                            lv.invalidateViews();
 
-                            if(arrayList.size()==0){
-                                Toast.makeText(getApplicationContext(),
-                                        "No Items found", Toast.LENGTH_LONG).show();
-                            }
+                                if (arrayList.size() == 0) {
+                                    Toast.makeText(getApplicationContext(),
+                                            "No Items found", Toast.LENGTH_LONG).show();
+                                }
+
 
                             dialog.dismiss();
 
