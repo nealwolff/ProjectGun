@@ -106,7 +106,7 @@ public class search extends AppCompatActivity {
                             List<listings> GBList = GBH.getListings();
 
                             //get the gunbroker listings
-                            for (int i = 0; i < GBList.size(); i++) {
+                            for (int i = GBList.size()-1; i >= 0; i--) {
                                 listings listing = GBList.get(i);
                                 arrayList.add(0,listing);
                             }
