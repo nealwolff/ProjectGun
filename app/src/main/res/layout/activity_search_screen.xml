@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_search_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.we00401.guntest2.SearchScreen">
+
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/tool_bar"/>
+
+    <include
+        layout="@layout/thetabs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tab_layout"
+        android:layout_below="@+id/tool_bar" />
+
+    <Button
+        android:text="Clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/clrBtn" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:layout_marginLeft="15dp"
+        android:id="@+id/foundView2"
+        android:layout_below="@+id/tab_layout"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/clrBtn" />
+
+    <Button
+        android:text="Save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/btnLoad2"
+        android:id="@+id/btnSave2" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/textSave2"
+        android:layout_alignStart="@+id/foundView"
+        android:layout_toStartOf="@+id/btnSave2" />
+
+    <Button
+        android:text="Load"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnLoad2"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/clrBtn" />
+</RelativeLayout>

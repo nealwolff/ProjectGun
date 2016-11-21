@@ -24,9 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.we00401.guntest2.search" />
         <activity android:name="com.example.we00401.guntest2.SavedSearch" />
         <activity android:name="com.example.we00401.guntest2.settings" />
+        <activity android:name="com.example.we00401.guntest2.SearchScreen" />
     </application>
 
 </manifest>

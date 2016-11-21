@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="50dp"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:text="Gunbroker"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/gunbroker"
+            android:background="@color/colorPrimary"
+            />
+        <Button
+            android:text="Armslist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/armlsist"
+            android:background="@color/colorPrimary"
+            />
+        <Button
+            android:text="AK Files"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/akfiles"
+            android:background="@color/colorPrimary"
+            />
+        <Button
+            android:text="FAL Files"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/falfiles"
+            android:background="@color/colorPrimary"
+            />
+        <Button
+            android:text="Guns America"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/GunsAmerica"
+            android:background="@color/colorPrimary"
+            />
+        <Button
+            android:text="Calguns"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/calGuns"
+            android:background="@color/colorPrimary"
+            />
+
+
+
+    </LinearLayout>
+
+</HorizontalScrollView >

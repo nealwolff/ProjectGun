@@ -22,7 +22,7 @@ public class MainScreen extends AppCompatActivity {
         //logs in the user and loads the search page
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(MainScreen.this, search.class));
+                startActivity(new Intent(MainScreen.this, SearchScreen.class));
             }
         });
 
