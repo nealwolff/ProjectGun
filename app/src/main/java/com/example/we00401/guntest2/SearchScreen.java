@@ -116,6 +116,10 @@ public class SearchScreen extends AppCompatActivity {
                     alertDialog.show();
                 }
                 else {
+                    if(!searchTerm.equals(theSearchTerm) &&theSearchTerm !="!none"){
+                        Toast.makeText(getApplicationContext(),
+                                "Note: new search terms clears old search", Toast.LENGTH_SHORT).show();
+                    }
                     //Ask the user to select categories to search.
 
                     AlertDialog.Builder alt_bld = new AlertDialog.Builder(SearchScreen.this);
