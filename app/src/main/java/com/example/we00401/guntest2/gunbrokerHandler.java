@@ -35,7 +35,7 @@ public class gunbrokerHandler extends website {
                 int j = i+1;
                 String temp2=HTMLfile.get(j);
                 listings workListing; //the current listing
-                String tempURL = ""; //Listing URL
+                String tempURL = ""; ///Listing URL
                 String tempName = ""; //Listing name
                 String tempImage = ""; //the listing image
                 String tempPrice = ""; //the listing price

@@ -129,7 +129,7 @@ public class SearchScreen extends AppCompatActivity {
                             .OnClickListener() {
                         public void onClick(DialogInterface dialog, int item) {
 
-                            //if a new search term is specified, clear the screen
+                            ///if a new search term is specified, clear the screen
                             if(!searchTerm.equals(theSearchTerm))
                                 clearEverything();
 
