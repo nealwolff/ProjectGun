@@ -124,7 +124,7 @@ public class SearchScreen extends AppCompatActivity {
 
                     AlertDialog.Builder alt_bld = new AlertDialog.Builder(SearchScreen.this);
                     alt_bld.setTitle("Select a category");
-                    final String[] grpname = {" Semi-Auto pistols "," Revolvers "," Bolt-Action rifles "," Semi-Auto rifles "};
+                    final String[] grpname = {" Semi-Auto pistols "," Revolvers "," Bolt-Action rifles "," Semi-Auto rifles "," Shotguns "};
                     alt_bld.setSingleChoiceItems(grpname, -1, new DialogInterface
                             .OnClickListener() {
                         public void onClick(DialogInterface dialog, int item) {

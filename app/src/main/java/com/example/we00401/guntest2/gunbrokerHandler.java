@@ -18,6 +18,8 @@ public class gunbrokerHandler extends website {
             URL += "&Cats=3024";
         }else if(cat.contains("Bolt-Action rifles")){
             URL += "&Cats=3022";
+        }else if(cat.contains("Shotguns")){
+            URL = "http://www.gunbroker.com/Shotguns/BI.aspx?Keywords=" + Search +"&Sort=3" + "&PageIndex=" + pagenum;
         }else{
             URL += "&Cats=0";
         }
