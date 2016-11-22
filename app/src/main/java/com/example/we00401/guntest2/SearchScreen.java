@@ -17,6 +17,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -293,7 +300,20 @@ public class SearchScreen extends AppCompatActivity {
                     });
 
                     alertDialog.show();
+                }else{
+                    File file = new File(temp);
+                    if(file.exists()) {
+                        AlertDialog alertDialog = new AlertDialog.Builder(SearchScreen.this).create();
+                        alertDialog.setTitle("error");
+                        alertDialog.setMessage("File already exists");
+                        alertDialog.show();
+                    }else {
+                        Savefile(temp);
+                    }
                 }
+
+
+
 
             }
         });
@@ -309,6 +329,69 @@ public class SearchScreen extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void Savefile(String name){
+
+
+        String data = "gunListings";
+        if(gunListings!= null) {
+            for (int i = 0; i < gunListings.size(); i++) {
+                listings tempElement = gunListings.get(i);
+                data += "\nname:" + tempElement.getName() + "\n" + "url:" + tempElement.getURL()
+                        + "\n" + "image:" + tempElement.getImage() + "\n" + "Price:" + tempElement.getPrice() + "\n";
+            }
+        }
+        else
+            data+=":null\n";
+
+        try {
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(this.openFileOutput(name, Context.MODE_PRIVATE));
+                outputStreamWriter.write(data);
+                outputStreamWriter.close();
+        }catch (IOException e) {
+            AlertDialog alertDialog = new AlertDialog.Builder(SearchScreen.this).create();
+            alertDialog.setTitle("Error");
+            alertDialog.setMessage("cannot save file");
+            alertDialog.show();
+        }
+    }
+
+    private String OpenFile(String filename) {
+
+        String ret = "";
+
+        try {
+            InputStream inputStream = this.openFileInput(filename);
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                    stringBuilder.append("\n");
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            AlertDialog alertDialog = new AlertDialog.Builder(SearchScreen.this).create();
+            alertDialog.setTitle("Error");
+            alertDialog.setMessage(e.toString());
+            alertDialog.show();
+        } catch (IOException e) {
+            AlertDialog alertDialog = new AlertDialog.Builder(SearchScreen.this).create();
+            alertDialog.setTitle("Error");
+            alertDialog.setMessage(e.toString());
+            alertDialog.show();
+        }
+
+        return ret;
     }
 
     private void clearEverything() {
