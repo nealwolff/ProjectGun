@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GunTest.iml" filepath="$PROJECT_DIR$/GunTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ProjectGun.iml" filepath="$PROJECT_DIR$/ProjectGun.iml" />
       <module fileurl="file://$PROJECT_DIR$/ProjectGun.iml" filepath="$PROJECT_DIR$/ProjectGun.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
