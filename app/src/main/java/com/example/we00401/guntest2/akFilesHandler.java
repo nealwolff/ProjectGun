@@ -1,6 +1,7 @@
-//package com.example.we00401.guntest2;
+package com.example.we00401.guntest2;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,7 +15,7 @@ public class akFilesHandler extends website {
 
 	String globalSearchString = "";
 	
-    public akFilesHandler(String Search){
+    public akFilesHandler(String Search, ArrayList<String> urls){
 //        String URL = "http://www.gunbroker.com/Auction/BrowseItems2.aspx?Keywords=" + Search +"&Cats=0";
 
     	globalSearchString = Search;
@@ -101,90 +102,18 @@ public class akFilesHandler extends website {
 //            System.out.println(URLs[i]);
 
     		System.out.println("^Parsing Page "+i);
-            parseListing(HTMLfile);
+            boolean kek = parseListing(HTMLfile,urls);
+			//if(!kek)
+			//	break;
+
 
         }//end loop step 3 i-loop
 
 
-
-        //navigate the current page
-//        for (int i =0;i<HTMLfile.size();i++) {
-//
-//            String temp = HTMLfile.get(i);
-//
-//            if (temp.contains("<td><a class=\"ItmTLnk\"")){
-//                int j = i+1;
-//                String temp2=HTMLfile.get(j);
-//                listings workListing; //the current listing
-//                String tempURL = ""; //Listing URL
-//                String tempName = ""; //Listing name
-//                String tempImage = ""; //the listing image
-//                String tempPrice = ""; //the listing price
-//
-//                while(!temp2.contains("<td><a class=\"ItmTLnk\"")){
-//
-//
-//
-//                    //gets the listing URL
-//                    if(temp2.contains("<a href=\"/item")){
-//                        String regex = "\"([^\"]*)\"";
-//                        Pattern pat = Pattern.compile(regex);
-//                        Matcher m = pat.matcher(temp2);
-//                        if(m.find()) {
-//                            tempURL = "http://www.gunbroker.com" + m.group(1);
-//                        }
-//
-//                        //gets the name
-//                        //tempName = temp2.replaceAll("\\<.*?>","");
-//                        //tempName = tempName.trim();
-//                    }
-//
-//                    //gets the name
-//                    if(temp2.contains("BItmTLnk")){
-//                        tempName=android.text.Html.fromHtml(temp2).toString();
-//                    }
-//
-//                    //gets the image
-//                    if(temp2.contains("<img alt=")){
-//                        String regex = "http([^\"]*).jpg";
-//                        Pattern pat = Pattern.compile(regex);
-//                        Matcher m = pat.matcher(temp2);
-//                        if(m.find()) {
-//                            tempImage = "http" + m.group(1) + ".jpg";
-//                        }
-//                    }
-//
-//                    //gets the price
-//                    if(temp2.contains("<td class=\"lrt\">$")){
-//                        tempPrice = temp2.replaceAll("\\<.*?>","");
-//                        tempPrice = tempPrice.trim();
-//                        if(tempPrice.equals(""))
-//                            tempPrice="error";
-//                    }
-//
-//                    j++;
-//                    if(j<HTMLfile.size())
-//                        temp2=HTMLfile.get(j);
-//                    else
-//                        break;
-//                }
-//                //if the listing does not have an image, replace it with a default one
-//                if(tempImage.equals(""))
-//                    tempImage="http://i.imgur.com/wqjK8ZG.png";
-//
-//                //create the listing
-//                workListing = new listings(tempImage,tempName,tempPrice, tempURL);
-//
-//                //add the listing to the list
-//                add(workListing);
-//            }
-//
-//        }
-
     }//end of constructor
 
     //find the listings on each forum page, and turn them into listings
-	private void parseListing(List<String> input) {
+	private boolean parseListing(List<String> input,ArrayList<String> urls) {
 		String[] output = new String[4];
 		String temp = "";
 		// TODO Auto-generated method stub
@@ -225,6 +154,10 @@ public class akFilesHandler extends website {
 				if(output[3].equals("http://www.akfiles.com/forums/f=")) {
 					continue;
 				}
+				if(urls.contains(output[3])) {
+					continue;
+					//return false;
+				}
 				System.out.println("ITEM:\t"+output[1]);
 				System.out.println("PRICE:\t"+output[2]);
 				System.out.println("URL:\t"+output[3]);
@@ -232,7 +165,7 @@ public class akFilesHandler extends website {
 				add(new listings(output[0],output[1],output[2],output[3]));
 			}
 		}
-		
+		return true;
 	}
 
 	//checks if the discription has the search string in it

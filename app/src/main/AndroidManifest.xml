@@ -20,7 +20,11 @@
         </activity>
         <activity android:name=".SavedSearch" />
         <activity android:name=".settings" />
-        <activity android:name=".SearchScreen"></activity>
+        <activity android:name=".SearchScreen" />
+        <activity
+            android:name=".webScreen"
+            android:label="@string/title_activity_web_screen"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
     </application>
 
 </manifest>

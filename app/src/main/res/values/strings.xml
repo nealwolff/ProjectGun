@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GunTest2</string>
+    <string name="title_activity_web_screen">webScreen</string>
 </resources>

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -88,6 +90,22 @@ public class SearchScreen extends AppCompatActivity {
             }
         });
 
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                listings entry= (listings) parent.getAdapter().getItem(position);
+
+                Intent intent = new Intent(
+                        SearchScreen.this, webScreen.class);
+                intent.putExtra("url", entry.getURL());
+                intent.putExtra("name", entry.getName());
+
+                startActivity(intent);
+                overridePendingTransition(R.anim.right_out,R.anim.left_in );
+
+            }
+        });
 
 
         gestureObject = new GestureDetectorCompat(this, new SearchScreen.LearnGesture());
@@ -223,11 +241,27 @@ public class SearchScreen extends AppCompatActivity {
                 america = false;
                 FAL = false;
                 setArraylist(akListings); //if the current search term has listings, load them
-
-                if(!theSearchTerm.equals("!none")){
-                    //toDO create AkfilesFinder
-                }
                 lv.invalidateViews();//refresh the listings
+
+                //if there is currently a search
+                if(!theSearchTerm.equals("!none")){
+                    new AlertDialog.Builder(SearchScreen.this)
+                            .setTitle("Decision")
+                            .setMessage("Do you wish to find new items since the last search?" +
+                                    "\nNote: It will take 30 seconds to search for new results")
+                            .setNegativeButton(android.R.string.cancel, null) // dismisses by default
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    AkfilesFinder(theSearchTerm);
+                                    lv.invalidateViews();//refresh the listings
+                                }
+                            })
+                            .create()
+                            .show();
+
+
+                }
+
             }
         });
 
@@ -413,6 +447,34 @@ public class SearchScreen extends AppCompatActivity {
         lv.invalidateViews();//refresh the listings
     }
 
+    public void AkfilesFinder(String searchTerm){
+        Toast.makeText(getApplicationContext(),
+                "Searching " + searchTerm + " can take 30 seconds", Toast.LENGTH_LONG).show();
+
+        akFilesHandler AKH = new akFilesHandler(searchTerm,akDuplicate);
+        List<listings> AKList = AKH.getListings();
+
+        if(AKList.size()==0) {
+            Toast.makeText(getApplicationContext(),
+                    "No Items found", Toast.LENGTH_LONG).show();
+            return;
+        }
+        for (int i = AKList.size() - 1; i >= 0; i--) {
+            listings listing = AKList.get(i);
+            arrayList.add(0, listing);
+            akListings.add(0, listing);
+
+            //create a linked list of strings containing all the urls for duplicate comparison
+            akDuplicate.add(0,listing.getURL());
+
+        }
+
+        lv.invalidateViews();
+
+
+
+    }
+
     //finds the gunbroker results
     public void FindGunbroker(String searchTerm, String grpname){
         Toast.makeText(getApplicationContext(),
@@ -455,12 +517,18 @@ public class SearchScreen extends AppCompatActivity {
                 listings listing = GBList.get(i);
                 arrayList.add(0, listing);
                 gunListings.add(0, listing);
+
+                //create a linked list of strings containing all the urls for duplicate comparison
+                gunDupilcate.add(0,listing.getURL());
+
             }
+
             //create a linked list of strings containing all the urls for duplicate comparison
             //ArrayList<String> urls = new ArrayList<String>();
-            for (int i = 0; i < arrayList.size(); i++) {
-                gunDupilcate.add(arrayList.get(i).getURL());
-            }
+            //for (int i = 0; i < arrayList.size(); i++) {
+           //     gunDupilcate.add(arrayList.get(i).getURL());
+           // }
+
             //set the global arraylist containing URLS to the current arraylsit
             //setGlobalArraylist(urls);
             //refresh the list view
