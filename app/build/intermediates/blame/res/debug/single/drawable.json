@@ -40,12 +40,12 @@
         "source": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/drawable/abc_cab_background_top_material.xml"
     },
     {
-        "merged": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/res/merged/debug/drawable/notification_bg_low.xml",
-        "source": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/drawable/notification_bg_low.xml"
-    },
-    {
         "merged": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/res/merged/debug/drawable/abc_list_selector_holo_dark.xml",
         "source": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/drawable/abc_list_selector_holo_dark.xml"
+    },
+    {
+        "merged": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/res/merged/debug/drawable/notification_bg_low.xml",
+        "source": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/drawable/notification_bg_low.xml"
     },
     {
         "merged": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/res/merged/debug/drawable/abc_spinner_textfield_background_material.xml",

@@ -48,12 +48,12 @@
         "source": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/exploded-aar/com.android.support/design/25.0.0/res/layout/design_navigation_item_subheader.xml"
     },
     {
-        "merged": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/res/merged/debug/layout/activity_saved_search.xml",
-        "source": "/home/flandre/StudioProjects/ProjectGun/app/src/main/res/layout/activity_saved_search.xml"
-    },
-    {
         "merged": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/res/merged/debug/layout/notification_template_part_chronometer.xml",
         "source": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/layout/notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/res/merged/debug/layout/activity_saved_search.xml",
+        "source": "/home/flandre/StudioProjects/ProjectGun/app/src/main/res/layout/activity_saved_search.xml"
     },
     {
         "merged": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/res/merged/debug/layout/content_web_screen.xml",
@@ -160,12 +160,12 @@
         "source": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/layout/abc_popup_menu_item_layout.xml"
     },
     {
-        "merged": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/res/merged/debug/layout/abc_action_mode_bar.xml",
-        "source": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/layout/abc_action_mode_bar.xml"
-    },
-    {
         "merged": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/res/merged/debug/layout/design_menu_item_action_area.xml",
         "source": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/exploded-aar/com.android.support/design/25.0.0/res/layout/design_menu_item_action_area.xml"
+    },
+    {
+        "merged": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/res/merged/debug/layout/abc_action_mode_bar.xml",
+        "source": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/layout/abc_action_mode_bar.xml"
     },
     {
         "merged": "/home/flandre/StudioProjects/ProjectGun/app/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view.xml",

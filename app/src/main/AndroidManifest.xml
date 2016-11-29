@@ -24,7 +24,8 @@
         <activity
             android:name=".webScreen"
             android:label="@string/title_activity_web_screen"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".register"></activity>
     </application>
 
 </manifest>
