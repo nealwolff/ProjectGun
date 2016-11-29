@@ -13,13 +13,14 @@ import android.webkit.WebView;
 
 public class webScreen extends AppCompatActivity {
     private GestureDetectorCompat gestureObject;
-    WebView webview=(WebView)findViewById(R.id.webBrowser);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        WebView webview=(WebView)findViewById(R.id.webBrowser);
 
 
         gestureObject = new GestureDetectorCompat(this, new webScreen.LearnGesture());
@@ -44,7 +45,6 @@ public class webScreen extends AppCompatActivity {
                                float velocityX, float velocityY){
 
             if(event2.getX() < event1.getX()){
-                webview.loadUrl("http://i.imgur.com/wqjK8ZG.png");
                 finish();
                 overridePendingTransition(R.anim.right_in,R.anim.left_out);
 

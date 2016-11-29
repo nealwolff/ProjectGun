@@ -82,13 +82,13 @@
         android:layout_marginTop="29dp" />
 
     <Button
-        android:text="Sign In"
+        android:text="Register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnSignIn2"
         android:textColorLink="@android:color/holo_green_dark"
         android:elevation="0dp"
-        android:backgroundTint="@android:color/holo_green_dark"
+        android:backgroundTint="@color/colorPrimary"
         android:onClick="signIn()"
         android:textColor="@android:color/white"
         android:textStyle="normal|bold"
