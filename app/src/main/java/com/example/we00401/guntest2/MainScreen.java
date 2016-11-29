@@ -20,7 +20,7 @@ public class MainScreen extends AppCompatActivity {
         Button btn1 = (Button)findViewById(R.id.btnSignIn);
 
         //register button
-        Button register = (Button)findViewById(R.id.btnRegister);
+        Button register = (Button)findViewById(R.id.btnSignIn2);
         //logs in the user and loads the search page
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -59,8 +59,6 @@ public class MainScreen extends AppCompatActivity {
 
 
     }
-
-
 
 
 

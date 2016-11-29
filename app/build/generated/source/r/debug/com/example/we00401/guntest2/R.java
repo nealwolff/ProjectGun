@@ -2659,10 +2659,10 @@ containing a value of this type.
         public static final int btnLoad=0x7f0c007e;
         public static final int btnLoad2=0x7f0c0086;
         public static final int btnLogOut=0x7f0c008b;
-        public static final int btnRegister=0x7f0c0072;
         public static final int btnRegisterC=0x7f0c007c;
         public static final int btnSave2=0x7f0c0087;
-        public static final int btnSignIn=0x7f0c0073;
+        public static final int btnSignIn=0x7f0c0074;
+        public static final int btnSignIn2=0x7f0c0075;
         public static final int buttonPanel=0x7f0c0049;
         public static final int calGuns=0x7f0c00c3;
         public static final int cancel_action=0x7f0c00ab;
@@ -2790,8 +2790,8 @@ containing a value of this type.
         public static final int tab_layout=0x7f0c0083;
         public static final int text=0x7f0c00bc;
         public static final int text2=0x7f0c00ba;
-        public static final int textName=0x7f0c0074;
-        public static final int textPassword=0x7f0c0075;
+        public static final int textName=0x7f0c0072;
+        public static final int textPassword=0x7f0c0073;
         public static final int textSave2=0x7f0c0088;
         public static final int textSpacerNoButtons=0x7f0c0052;
         public static final int textView=0x7f0c0071;

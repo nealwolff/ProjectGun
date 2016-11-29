@@ -13,7 +13,7 @@ public class register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        Button register = (Button)findViewById(R.id.btnRegister);
+        Button register = (Button)findViewById(R.id.btnRegisterC);
         //goes back to the login screen
         register.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

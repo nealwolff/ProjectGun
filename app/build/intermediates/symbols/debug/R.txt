@@ -708,10 +708,10 @@ int id btnGo2 0x7f0c00c5
 int id btnLoad 0x7f0c007e
 int id btnLoad2 0x7f0c0086
 int id btnLogOut 0x7f0c008b
-int id btnRegister 0x7f0c0072
 int id btnRegisterC 0x7f0c007c
 int id btnSave2 0x7f0c0087
-int id btnSignIn 0x7f0c0073
+int id btnSignIn 0x7f0c0074
+int id btnSignIn2 0x7f0c0075
 int id buttonPanel 0x7f0c0049
 int id calGuns 0x7f0c00c3
 int id cancel_action 0x7f0c00ab
@@ -839,8 +839,8 @@ int id tabMode 0x7f0c000f
 int id tab_layout 0x7f0c0083
 int id text 0x7f0c00bc
 int id text2 0x7f0c00ba
-int id textName 0x7f0c0074
-int id textPassword 0x7f0c0075
+int id textName 0x7f0c0072
+int id textPassword 0x7f0c0073
 int id textSave2 0x7f0c0088
 int id textSpacerNoButtons 0x7f0c0052
 int id textView 0x7f0c0071

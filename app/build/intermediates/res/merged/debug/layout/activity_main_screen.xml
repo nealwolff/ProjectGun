@@ -38,33 +38,6 @@
         android:textAllCaps="false"
         android:typeface="sans" />
 
-    <Button
-        android:text="Register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnRegister"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/btnSignIn"
-        android:layout_marginBottom="44dp"
-        android:minHeight="0dp"
-        android:backgroundTint="@android:color/holo_blue_bright"
-        android:onClick="register()"
-        android:textStyle="normal|bold" />
-
-    <Button
-        android:text="Sign In"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnSignIn"
-        android:layout_above="@+id/btnRegister"
-        android:layout_centerHorizontal="true"
-        android:textColorLink="@android:color/holo_green_dark"
-        android:elevation="0dp"
-        android:backgroundTint="@android:color/holo_green_dark"
-        android:onClick="signIn()"
-        android:textColor="@android:color/white"
-        android:textStyle="normal|bold" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -92,5 +65,34 @@
         android:layout_centerVertical="true"
         android:layout_alignEnd="@+id/logintext"
         android:selectAllOnFocus="true" />
+
+    <Button
+        android:text="Sign In"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnSignIn"
+        android:textColorLink="@android:color/holo_green_dark"
+        android:elevation="0dp"
+        android:backgroundTint="@android:color/holo_green_dark"
+        android:onClick="signIn()"
+        android:textColor="@android:color/white"
+        android:textStyle="normal|bold"
+        android:layout_below="@+id/textPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp" />
+
+    <Button
+        android:text="Sign In"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnSignIn2"
+        android:textColorLink="@android:color/holo_green_dark"
+        android:elevation="0dp"
+        android:backgroundTint="@android:color/holo_green_dark"
+        android:onClick="signIn()"
+        android:textColor="@android:color/white"
+        android:textStyle="normal|bold"
+        android:layout_below="@+id/btnSignIn"
+        android:layout_alignStart="@+id/btnSignIn" />
 
 </RelativeLayout>
