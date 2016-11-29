@@ -58,4 +58,12 @@
         android:id="@+id/editText2"
         android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnRegisterC"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

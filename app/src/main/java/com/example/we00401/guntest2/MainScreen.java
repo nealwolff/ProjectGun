@@ -19,10 +19,21 @@ public class MainScreen extends AppCompatActivity {
         //log in button
         Button btn1 = (Button)findViewById(R.id.btnSignIn);
 
+        //register button
+        Button register = (Button)findViewById(R.id.btnRegister);
         //logs in the user and loads the search page
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(MainScreen.this, SearchScreen.class));
+                finish();
+            }
+        });
+
+        //loads the register page
+        btn1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainScreen.this, register.class));
+                finish();
             }
         });
 
