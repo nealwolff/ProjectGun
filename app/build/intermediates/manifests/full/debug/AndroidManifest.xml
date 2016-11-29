@@ -31,6 +31,7 @@
             android:name="com.example.we00401.guntest2.webScreen"
             android:label="@string/title_activity_web_screen"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name="com.example.we00401.guntest2.register" />
     </application>
 
 </manifest>

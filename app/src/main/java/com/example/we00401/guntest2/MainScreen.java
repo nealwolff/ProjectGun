@@ -30,10 +30,9 @@ public class MainScreen extends AppCompatActivity {
         });
 
         //loads the register page
-        btn1.setOnClickListener(new View.OnClickListener() {
+        register.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(MainScreen.this, register.class));
-                finish();
             }
         });
 
