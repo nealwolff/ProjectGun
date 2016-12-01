@@ -117,7 +117,7 @@ public class CalGunsHandler extends website {
 //            System.out.println(URLs[i]);
 
             //GHETTO DEBUG
-            if(i < 10) {
+            if(i > 10) {
             	break;
             }
             //</ghetto debug>
