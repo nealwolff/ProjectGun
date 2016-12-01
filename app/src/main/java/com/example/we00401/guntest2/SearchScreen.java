@@ -298,11 +298,26 @@ public class SearchScreen extends AppCompatActivity {
                 america = false;
                 FAL = true;
                 setArraylist(falListings); //if the current search term has listings, load them
-
-                if(!theSearchTerm.equals("!none")){
-                    //toDO create FalfilesFinder
-                }
                 lv.invalidateViews();//refresh the listings
+
+                //if there is currently a search
+                if(!theSearchTerm.equals("!none")){
+                    new AlertDialog.Builder(SearchScreen.this)
+                            .setTitle("Decision")
+                            .setMessage("Do you wish to find new items since the last search?" +
+                                    "\nNote: It will take 30 seconds to search for new results")
+                            .setNegativeButton(android.R.string.cancel, null) // dismisses by default
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    FalfilesFinder(theSearchTerm);
+                                    lv.invalidateViews();//refresh the listings
+                                }
+                            })
+                            .create()
+                            .show();
+
+                }
+
             }
         });
         btnAmerica.setOnClickListener(new View.OnClickListener() {
@@ -495,7 +510,31 @@ public class SearchScreen extends AppCompatActivity {
 
         lv.invalidateViews();
 
+    }
 
+    public void FalfilesFinder(String searchTerm){
+        Toast.makeText(getApplicationContext(),
+                "Searching " + searchTerm + " can take 30 seconds", Toast.LENGTH_LONG).show();
+
+        FalFilesHandler FALH = new FalFilesHandler(searchTerm);
+        List<listings> FALList = FALH.getListings();
+
+        if(FALList.size()==0) {
+            Toast.makeText(getApplicationContext(),
+                    "No Items found", Toast.LENGTH_LONG).show();
+            return;
+        }
+        for (int i = FALList.size() - 1; i >= 0; i--) {
+            listings listing = FALList.get(i);
+            arrayList.add(0, listing);
+            falListings.add(0, listing);
+
+            //create a linked list of strings containing all the urls for duplicate comparison
+            falDupilcate.add(0,listing.getURL());
+
+        }
+
+        lv.invalidateViews();
 
     }
 
