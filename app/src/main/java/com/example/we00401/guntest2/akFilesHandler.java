@@ -168,10 +168,17 @@ public class akFilesHandler extends website {
 		return true;
 	}
 
-	//checks if the discription has the search string in it
-	private boolean relevantResult(String input) {
+// 	//checks if the discription has the search string in it
+// 	private boolean relevantResult(String input) {
 
-		return(input.contains(globalSearchString));
+// 		return(input.contains(globalSearchString));
+// 	}
+		private boolean relevantResult(String input) {
+//input.c
+//		"ABCDEFGHIJKLMNOP".toLowerCase().contains("gHi".toLowerCase())
+		
+//		return(input.contains(globalSearchString));
+		return(input.toLowerCase().contains(globalSearchString.toLowerCase()));
 	}
 
 	//find the URL
