@@ -107,6 +107,30 @@ public class SearchScreen extends AppCompatActivity {
             }
         });
 
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           int position, long id) {
+                listings entry= (listings) parent.getAdapter().getItem(position);
+
+
+                AlertDialog.Builder adb=new AlertDialog.Builder(SearchScreen.this);
+                adb.setTitle("Delete?");
+                adb.setMessage("Are you sure you want to delete " + entry.getName());
+                final int positionToRemove = position;
+                adb.setNegativeButton("Cancel", null);
+                adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        arrayList.remove(positionToRemove);
+                        lv.invalidateViews();
+                    }});
+                adb.show();
+
+                System.out.println("long clicked");
+
+                return true;
+            }
+        });
+
 
         gestureObject = new GestureDetectorCompat(this, new SearchScreen.LearnGesture());
 
