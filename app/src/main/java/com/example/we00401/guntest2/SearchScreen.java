@@ -345,11 +345,26 @@ public class SearchScreen extends AppCompatActivity {
                 america = false;
                 FAL = false;
                 setArraylist(calListings); //if the current search term has listings, load them
-
-                if(!theSearchTerm.equals("!none")){
-                    //toDO create calgunsFinder
-                }
                 lv.invalidateViews();//refresh the listings
+
+                //if there is currently a search
+                if(!theSearchTerm.equals("!none")){
+                    new AlertDialog.Builder(SearchScreen.this)
+                            .setTitle("Decision")
+                            .setMessage("Do you wish to find new items since the last search?" +
+                                    "\nNote: It will take 30 seconds to search for new results")
+                            .setNegativeButton(android.R.string.cancel, null) // dismisses by default
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    CalgunsFinder(theSearchTerm);
+                                    lv.invalidateViews();//refresh the listings
+                                }
+                            })
+                            .create()
+                            .show();
+
+
+                }
             }
         });
 
@@ -531,6 +546,32 @@ public class SearchScreen extends AppCompatActivity {
 
             //create a linked list of strings containing all the urls for duplicate comparison
             falDupilcate.add(0,listing.getURL());
+
+        }
+
+        lv.invalidateViews();
+
+    }
+
+    public void CalgunsFinder(String searchTerm){
+        Toast.makeText(getApplicationContext(),
+                "Searching " + searchTerm + " can take 30 seconds", Toast.LENGTH_LONG).show();
+
+        CalGunsHandler CALH = new CalGunsHandler(searchTerm);
+        List<listings> CALList = CALH.getListings();
+
+        if(CALList.size()==0) {
+            Toast.makeText(getApplicationContext(),
+                    "No Items found", Toast.LENGTH_LONG).show();
+            return;
+        }
+        for (int i = CALList.size() - 1; i >= 0; i--) {
+            listings listing = CALList.get(i);
+            arrayList.add(0, listing);
+            calListings.add(0, listing);
+
+            //create a linked list of strings containing all the urls for duplicate comparison
+            calDuplicate.add(0,listing.getURL());
 
         }
 
