@@ -61,9 +61,9 @@ public class gunsAmericaHandler extends website {
                 for(int j = 0; j < HTMLfile.size(); j++) {//find the listings
                     if(HTMLfile.get(j).contains("listings-list listings-item-box clearfix")) {
                         boolean currentInfo = parseListing(j,HTMLfile,urls);
-                        if(!currentInfo){
-                            //break;
-                        }
+                       // if(!currentInfo){
+                       //     //break;
+                       // }
                     }
                 }
 //    			System.out.println("Number of Listings Found: "+listingsFoundCount);
@@ -89,6 +89,8 @@ public class gunsAmericaHandler extends website {
             } else if (input.charAt(i) == '~') { //lol, not supported; bad STQA on thier part; make it a space, nobody will notice
                 output += "%20";
             } else if (input.charAt(i) == '?') { //nope, just nope
+                output += "%20";
+            } else if (input.charAt(i) == '-') { //nope, just nope
                 output += "%20";
             } else {
                 output += input.charAt(i);
@@ -126,9 +128,9 @@ public class gunsAmericaHandler extends website {
                 System.out.println("Name:\t"+output[1]);
                 System.out.println("Price:\t"+output[2]);
                 System.out.println("URL:\t"+output[3]);
-                if(urls.contains(output[3])){
-                    return false;
-                }
+               // if(urls.contains(output[3])){
+              //      return false;
+              //  }
                 add(new listings(output[0],output[1],output[2],output[3]));
                 break;
             }
