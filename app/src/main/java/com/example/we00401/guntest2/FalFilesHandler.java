@@ -228,24 +228,25 @@ public class FalFilesHandler extends website {
 //				System.out.print(i+"\t");
 				
 				output[1] = parseName(temp);
-				
+//				System.out.println(output[1]);
 				//if its not what we are looking for then fuckit
 				if(relevantResult(output[1]) != true) {
+//					System.out.println("NOPE");
 					continue;
 				}
-				
+
 				output[1] = parseTitle(i, input);
-				
 				
 				output[0] = "http://i.imgur.com/wqjK8ZG.png";
 				
 				output[2] = parsePrice(temp); // not everything has a price in it, but parse the first moneybags it sees
 				output[3] = praseURL(i,input);
 				//why does akfiles link to dead threads?
-//				if(output[3].equals("http://www.akfiles.com/forums/f=")) {
-//					continue;
-//				}
+				if(output[3].equals("http://www.akfiles.com/forums/f=")) {
+					continue;
+				}
 				System.out.println("ITEM:\t"+output[1]);
+//				System.out.println("IMAGE:\t"+output[0]);
 				System.out.println("PRICE:\t"+output[2]);
 				System.out.println("URL:\t"+output[3]);
 				System.out.println();
@@ -288,9 +289,6 @@ public class FalFilesHandler extends website {
 						break;
 					}
 				}
-//				http://www.falfiles.com/forums/forumdisplay.php?f=11&order=desc&page=2
-//				return("http://www.akfiles.com/forums/"+temp);
-// 				return("www.falfiles.com/forums/"+temp);
 				if(temp.equals("f=")) {
 					System.out.print("u wut m8?");
 					return("http://www.akfiles.com/forums/f=");
@@ -303,8 +301,7 @@ public class FalFilesHandler extends website {
 				}
 //				http://www.falfiles.com/forums/forumdisplay.php?f=11&order=desc&page=2
 //				return("http://www.akfiles.com/forums/"+temp);
-				return("http://www.calguns.net/calgunforum/showthread.php?"+temp);
-//				return(temp);
+				return("www.falfiles.com/forums/showthread.php?"+temp);
 			}
 		}
 //		
@@ -361,8 +358,7 @@ public class FalFilesHandler extends website {
 		return output;
 	}
 
-
-		private String parseTitle(int index, List<String> input) {
+	private String parseTitle(int index, List<String> input) {
 		String output = "";
 		
 		for(int i = index; i < input.size(); i++) {
@@ -382,5 +378,6 @@ public class FalFilesHandler extends website {
 		
 		return(output);
 	}
+
 }
 
