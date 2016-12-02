@@ -262,6 +262,26 @@ public class akFilesHandler extends website {
 		
 		return output;
 	}
+		private String parseTitle(int index, List<String> input) {
+		String output = "";
+		
+		for(int i = index; i < input.size(); i++) {
+			if(input.get(i).contains("<a")) {
+				output = input.get(i);
+				break;
+			}
+		}
+		
+		for(int i = 0; i < output.length(); i++) {
+			if(output.charAt(i) == '>') {
+				output = output.substring(i+1,output.length()-4);
+//				System.out.println(output);
+				break;
+			}
+		}
+		
+		return(output);
+	}
 
 
 }
