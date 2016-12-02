@@ -146,7 +146,14 @@ public class akFilesHandler extends website {
 				if(relevantResult(output[1]) != true) {
 					continue;
 				}
+				output[1] = parseName(temp);
 				
+				//if its not what we are looking for then fuckit
+				if(relevantResult(output[1]) != true) {
+					continue;
+				}
+				
+				output[1] = parseTitle(i, input);
 				output[0] = "http://i.imgur.com/wqjK8ZG.png";
 				output[2] = parsePrice(temp); // not everything has a price in it, but parse the first moneybags it sees
 				output[3] = praseURL(i,input);
