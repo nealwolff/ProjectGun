@@ -53,6 +53,7 @@ public class SearchScreen extends AppCompatActivity {
     ArrayList<String> calDuplicate = new ArrayList<String>();
     ArrayList<String> falDupilcate = new ArrayList<String>();
 
+    //These are the linked lists with the individual site listings.
     ArrayList<listings> gunListings = new ArrayList<listings>();
     ArrayList<listings> armsListings = new ArrayList<listings>();
     ArrayList<listings> akListings = new ArrayList<listings>();
@@ -282,10 +283,7 @@ public class SearchScreen extends AppCompatActivity {
                             })
                             .create()
                             .show();
-
-
                 }
-
             }
         });
 
@@ -329,11 +327,26 @@ public class SearchScreen extends AppCompatActivity {
                 america = true;
                 FAL = false;
                 setArraylist(americaListings); //if the current search term has listings, load them
-
-                if(!theSearchTerm.equals("!none")){
-                    //toDO create americaFinder
-                }
                 lv.invalidateViews();//refresh the listings
+
+                //if there is currently a search
+                if(!theSearchTerm.equals("!none")){
+                    new AlertDialog.Builder(SearchScreen.this)
+                            .setTitle("Decision")
+                            .setMessage("Do you wish to find new items since the last search?" +
+                                    "\nNote: It will take 30 seconds to search for new results")
+                            .setNegativeButton(android.R.string.cancel, null) // dismisses by default
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    GunsamericaFinder(theSearchTerm);
+                                    lv.invalidateViews();//refresh the listings
+                                }
+                            })
+                            .create()
+                            .show();
+
+
+                }
             }
         });
         btnCal.setOnClickListener(new View.OnClickListener() {
@@ -420,7 +433,6 @@ public class SearchScreen extends AppCompatActivity {
     }
 
     public void Savefile(String name){
-
 
         String data = "gunListings";
         if(gunListings!= null) {
@@ -546,6 +558,32 @@ public class SearchScreen extends AppCompatActivity {
 
             //create a linked list of strings containing all the urls for duplicate comparison
             falDupilcate.add(0,listing.getURL());
+
+        }
+
+        lv.invalidateViews();
+
+    }
+
+    public void GunsamericaFinder(String searchTerm){
+        Toast.makeText(getApplicationContext(),
+                "Searching " + searchTerm + " can take 30 seconds", Toast.LENGTH_LONG).show();
+
+        gunsAmericaHandler AmericaH = new gunsAmericaHandler(searchTerm,americaDuplicate);
+        List<listings> AmericaList = AmericaH.getListings();
+
+        if(AmericaList.size()==0) {
+            Toast.makeText(getApplicationContext(),
+                    "No Items found", Toast.LENGTH_LONG).show();
+            return;
+        }
+        for (int i = AmericaList.size() - 1; i >= 0; i--) {
+            listings listing = AmericaList.get(i);
+            arrayList.add(0, listing);
+            americaListings.add(0, listing);
+
+            //create a linked list of strings containing all the urls for duplicate comparison
+            americaDuplicate.add(0,listing.getURL());
 
         }
 

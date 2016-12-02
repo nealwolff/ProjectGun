@@ -31,7 +31,7 @@ public class settings extends AppCompatActivity {
         out.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(settings.this, MainScreen.class));
-                //finish();
+                finish();
             }
         });
 

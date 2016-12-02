@@ -6,5 +6,9 @@
     {
         "merged": "C:\\Users\\Joshua\\Documents\\ProjectGun\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_launcher.png",
         "source": "C:\\Users\\Joshua\\Documents\\ProjectGun\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\nw00747\\Documents\\ProjectGun\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_launcher.png",
+        "source": "C:\\Users\\nw00747\\Documents\\ProjectGun\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
     }
 ]
