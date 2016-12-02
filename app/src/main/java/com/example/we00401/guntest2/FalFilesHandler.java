@@ -289,7 +289,21 @@ public class FalFilesHandler extends website {
 				}
 //				http://www.falfiles.com/forums/forumdisplay.php?f=11&order=desc&page=2
 //				return("http://www.akfiles.com/forums/"+temp);
-				return("www.falfiles.com/forums/"+temp);
+// 				return("www.falfiles.com/forums/"+temp);
+				if(temp.equals("f=")) {
+					System.out.print("u wut m8?");
+					return("http://www.akfiles.com/forums/f=");
+				}
+				
+				for(int kek = 0; kek < temp.length(); kek++) {
+					if(temp.charAt(kek) == '&') {
+						temp = temp.substring(kek+1,temp.length());
+					}
+				}
+//				http://www.falfiles.com/forums/forumdisplay.php?f=11&order=desc&page=2
+//				return("http://www.akfiles.com/forums/"+temp);
+				return("http://www.calguns.net/calgunforum/showthread.php?"+temp);
+//				return(temp);
 			}
 		}
 //		
