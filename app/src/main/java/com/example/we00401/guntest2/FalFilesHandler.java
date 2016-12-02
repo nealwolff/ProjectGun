@@ -228,12 +228,13 @@ public class FalFilesHandler extends website {
 //				System.out.print(i+"\t");
 				
 				output[1] = parseName(temp);
-//				System.out.println(output[1]);
+				
 				//if its not what we are looking for then fuckit
 				if(relevantResult(output[1]) != true) {
-//					System.out.println("NOPE");
 					continue;
 				}
+				
+				output[1] = parseTitle(i, input);
 				
 				
 				output[0] = "http://i.imgur.com/wqjK8ZG.png";
