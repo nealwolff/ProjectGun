@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 public class register extends AppCompatActivity {
 
+    DatabaseHelper helper = new DatabaseHelper(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +45,19 @@ public class register extends AppCompatActivity {
                         // pop up message
                         Toast.makeText(register.this, "Your password doesnt match f*cker", Toast.LENGTH_SHORT).show();
 
-                    } else {
+                    }
+
+                    else {
+
+                        // insert details in database
+                        Contact c = new Contact();
+                        c.setName(namestr);
+                        c.setEmail(emailstr);
+                        c.setUname(unamestr);
+                        c.setPass(pass1str);
+
+                        helper.insertContact(c);
+                        Toast.makeText(register.this, "Account created", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }

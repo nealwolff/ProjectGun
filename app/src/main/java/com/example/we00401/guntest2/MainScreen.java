@@ -9,6 +9,8 @@ import android.content.*;
 public class MainScreen extends AppCompatActivity {
 
 
+    DatabaseHelper helper = new DatabaseHelper(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,13 +23,38 @@ public class MainScreen extends AppCompatActivity {
 
         //register button
         Button register = (Button)findViewById(R.id.btnSignIn2);
+
+
         //logs in the user and loads the search page
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(MainScreen.this, SearchScreen.class));
-                finish();
+
+                EditText a = (EditText)findViewById(R.id.textName);
+                String str = a.getText().toString();
+                EditText b = (EditText)findViewById(R.id.textPassword);
+                String pass = b.getText().toString();
+
+                String password = helper.searchPass(str);
+
+                if (pass.equals(password)) {
+                    startActivity(new Intent(MainScreen.this, SearchScreen.class));
+//                    i.putExtra("Username", str);
+                    //finish();
+                }
+
+                else {
+                    Toast.makeText(MainScreen.this, "Username and Password don't match.... f*cker", Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
+
+
+
+        // new log in method
+//        public void onButtonClick(View v) {
+//
+//    }
 
         //loads the register page
         register.setOnClickListener(new View.OnClickListener() {
@@ -38,7 +65,6 @@ public class MainScreen extends AppCompatActivity {
 
         //clears the name feild when clicked
         final EditText textName = (EditText)findViewById(R.id.textName);
-
         textName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,13 +75,12 @@ public class MainScreen extends AppCompatActivity {
 
         //clears the password feild when focused
         final EditText textPassword = (EditText)findViewById(R.id.textPassword);
-
         textPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View view, boolean b) {
-                textPassword.setText("");
-            }
+            public void onFocusChange(View view, boolean b) {textPassword.setText("");}
         });
+
+
 
 
     }
