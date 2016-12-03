@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class gunbrokerHandler extends website {
+    String pageNum;
     public gunbrokerHandler(String Search, String cat, ArrayList<String>urls, int pagenum){
 
         String URL = "http://www.gunbroker.com/Auction/BrowseItems2.aspx?Keywords=" + Search +"&Sort=3" + "&PageIndex=" + pagenum;
@@ -85,6 +86,15 @@ public class gunbrokerHandler extends website {
                         tempPrice = tempPrice.trim();
                         if(tempPrice.equals(""))
                             tempPrice="error";
+                    }
+
+                    if(temp2.contains("onblur=\"return")){
+                        String regex = "this,'1','1','([^\"]*)'";
+                        Pattern pat = Pattern.compile(regex);
+                        Matcher m = pat.matcher(temp2);
+                        if(m.find()) {
+                            pageNum = m.group(1).replace(")","");
+                        }
                     }
 
                     j++;

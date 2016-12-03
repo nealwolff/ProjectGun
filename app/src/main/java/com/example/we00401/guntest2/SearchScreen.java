@@ -1,10 +1,10 @@
 package com.example.we00401.guntest2;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,8 +29,15 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import android.os.Handler;
+import android.os.Message;
 
 public class SearchScreen extends AppCompatActivity {
+    boolean check = true;
+    private Handler handler;
+    private ProgressDialog pdialog;
+    //Linked list of lists of listings, used to store the lists of each page.
+    private LinkedList<List<listings>> allPages = new  LinkedList<List<listings>>();
 
     String theSearchTerm = "!none";
     String cattegory = "";
@@ -201,7 +208,7 @@ public class SearchScreen extends AppCompatActivity {
 
                             //checks which tab the user is on
                             if(gun)
-                                FindGunbroker(theSearchTerm, cattegory);
+                                FindGunbroker(theSearchTerm,cattegory);
                             if(AK)
                                 AkfilesFinder(theSearchTerm);
                             if (FAL)
@@ -686,64 +693,131 @@ public class SearchScreen extends AppCompatActivity {
                 "Searching " + searchTerm + " in \""+grpname+"\"", Toast.LENGTH_LONG).show();
 
 
-        String temp=searchTerm.replaceAll("\\s","+");
+        final String temp=searchTerm.replaceAll("\\s","+");
         //testHandler test = new testHandler();
         //if the gunbroker checkbox is clicked, search gunbroker.
-        boolean check = true;
-        int pagenum=0;
-        //Linked list of lists of listings, used to store the lists of each page.
-        LinkedList<List<listings>> allPages = new  LinkedList<List<listings>>();
-        while(check) {
-            pagenum++;
-            //ArrayList<String> compares = getGlobalArraylist();
-            gunbrokerHandler GBH = new gunbrokerHandler(temp, grpname, gunDupilcate, pagenum);
-            List<listings> GBList = GBH.getListings();
 
-            if (GBList.size() == 0) {
-                break;
+
+
+        allPages.clear();
+
+        final String grpname2= grpname;
+        final Thread t = new Thread() {
+            public void run() {
+
+                int pagenum=0;
+                check = true;
+                String theFinalPageNum="kek";
+                while(check) {
+                    pagenum++;
+                    //ArrayList<String> compares = getGlobalArraylist();
+                    gunbrokerHandler GBH = new gunbrokerHandler(temp, grpname2, gunDupilcate, pagenum);
+                    List<listings> GBList = GBH.getListings();
+
+                    if(theFinalPageNum.equals("kek"))
+                        theFinalPageNum=GBH.pageNum;
+
+                    if (GBList.size() == 0) {
+                        break;
+                    }
+                    //runOnUiThread(new Runnable() {
+
+                    // public void run() {
+                    //GBH.print();
+                    allPages.add(GBList);
+
+                    //}
+                    // });
+                    if(!check){
+                        check=true;
+                        break;
+                    }
+
+                    final int page = pagenum;
+                    final String finalPage = theFinalPageNum;
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+                            pdialog.setMessage("Loading. Please wait...\nNote, if your term was too broad this could take some time\n"+
+                                    " On page: " + page + " of " + finalPage);
+                        }
+                    });
+                }
+
+                //traveres the pages and add the objects to their respective lists.
+                for(int j = allPages.size()-1;j>=0;j--) {
+
+                    //if nothing was found
+                    if(allPages.size()==0){
+                        Toast.makeText(getApplicationContext(),
+                                "No Items found", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+
+                    //get the page
+                    List<listings> GBList = allPages.get(j);
+                    //get the gunbroker listings from that page
+                    for (int i = GBList.size() - 1; i >= 0; i--) {
+                        listings listing = GBList.get(i);
+                        arrayList.add(0, listing);
+                        gunListings.add(0, listing);
+
+                        //create a linked list of strings containing all the urls for duplicate comparison
+                        gunDupilcate.add(0,listing.getURL());
+                    }
+
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+                            lv.invalidateViews();
+                        }
+                    });
+
+                }
+
+                runOnUiThread(new Runnable() {
+
+                    public void run() {
+                        if (arrayList.size() == 0) {
+                            Toast.makeText(getApplicationContext(),
+                                    "No Items found", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                });
+                handler.sendEmptyMessage(0);
             }
-            allPages.add(GBList);
-        }
 
-        //traveres the pages and add the objects to their respective lists.
-        for(int j = allPages.size()-1;j>=0;j--) {
+        };
 
-            //if nothing was found
-            if(allPages.size()==0){
-                Toast.makeText(getApplicationContext(),
-                        "No Items found", Toast.LENGTH_LONG).show();
-                break;
+
+
+
+
+        pdialog = new ProgressDialog(SearchScreen.this); // this = YourActivity
+        pdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pdialog.setMessage("Loading. Please wait...\nIf your term was too broad this could take some time");
+        pdialog.setIndeterminate(true);
+        pdialog.setCanceledOnTouchOutside(false);
+        pdialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Stop Search", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                pdialog.dismiss();
+                check=false;
             }
+        });
+        pdialog.show();
 
-            //get the page
-            List<listings> GBList = allPages.get(j);
-            //get the gunbroker listings from that page
-            for (int i = GBList.size() - 1; i >= 0; i--) {
-                listings listing = GBList.get(i);
-                arrayList.add(0, listing);
-                gunListings.add(0, listing);
+        t.start();
 
-                //create a linked list of strings containing all the urls for duplicate comparison
-                gunDupilcate.add(0,listing.getURL());
+        handler = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                pdialog.dismiss();
+            };
+        };//*/
 
-            }
 
-            //create a linked list of strings containing all the urls for duplicate comparison
-            //ArrayList<String> urls = new ArrayList<String>();
-            //for (int i = 0; i < arrayList.size(); i++) {
-           //     gunDupilcate.add(arrayList.get(i).getURL());
-           // }
 
-            //set the global arraylist containing URLS to the current arraylsit
-            //setGlobalArraylist(urls);
-            //refresh the list view
-            lv.invalidateViews();
-        }
-
-        if (arrayList.size() == 0) {
-            Toast.makeText(getApplicationContext(),
-                    "No Items found", Toast.LENGTH_LONG).show();
-        }
     }
 
     //this method clears the global arraylist and sets one of the
