@@ -802,7 +802,6 @@ public class SearchScreen extends AppCompatActivity {
         pdialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Stop Search", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                pdialog.dismiss();
                 check=false;
             }
         });
