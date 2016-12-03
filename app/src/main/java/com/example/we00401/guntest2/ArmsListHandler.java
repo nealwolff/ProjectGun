@@ -1,5 +1,7 @@
 package com.example.we00401.guntest2;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ArmsListHandler extends website {
 
@@ -12,14 +14,8 @@ public class ArmsListHandler extends website {
     public ArmsListHandler(String search) {
         globalSearchString = search;
 
-//		URL = "https://www.armslist.com/classifieds/search?location=usa&category=all&page=2&posttype=7&ships=False";
         URL = "https://www.armslist.com/classifieds/search?location=usa&category=all";
 
-//		https://www.armslist.com/classifieds/search?search=I+dont+-+even&location=usa&category=all&posttype=7&ships=False
-
-        //get number of pages
-//		pages = getTotalNumberofPages();
-//		System.out.println(pages);
 
         int pagecount = 1;
         while(true) {
@@ -29,16 +25,13 @@ public class ArmsListHandler extends website {
             if(containsResults(URL) != true) {
                 break;
             } else {
-                try{
+                try {
                     parseListings();
-                } catch(Exception e) {
-                    System.out.println("Page: "+pagecount+"\n"+e);
+                } catch (Exception e) {
+                    System.out.println("Page: " + pagecount + "\n" + e);
                 }
 
             }
-
-//
-
             pagecount++;
         }
 
@@ -50,29 +43,90 @@ public class ArmsListHandler extends website {
     void parseListings() {
         String[] output = new String[4];
 
-        for(int i = 0; i < HTMLfile.size(); i++) {
+        for (int i =0;i<HTMLfile.size();i++) {
 
-            if(HTMLfile.get(i).contains("<div style=\"po")) {
-//				System.out.println(i+"\t"+HTMLfile.get(i));
-                output[0] = parseImage(i);
+            String temp = HTMLfile.get(i);
 
-                System.out.println(i+"\t"+"IMAGE:\t"+output[0]);
-                System.out.println(i+"\t"+"ITEM:\t"+output[1]);
-                System.out.println(i+"\t"+"PRICE:\t"+output[2]);
-                System.out.println(i+"\t"+"URL:\t"+output[3]);
-                System.out.println();
+            if (temp.contains("<div style=\"po")){
+                String tempURL = ""; ///Listing URL
+                String tempName = ""; //Listing name
+                String tempImage = ""; //the listing image
+                String tempPrice = ""; //the listing price
 
-            }//if
-        }//for i
+                //gets listing URL
+                String regex = "href=\"([^\"]*)\">";
+                Pattern pat = Pattern.compile(regex);
+                Matcher m = pat.matcher(temp);
+                if(m.find()) {
+                    tempURL = "http://www.armslist.com" + m.group(1);
+                }
+
+                int j = i+1;
+                String temp2=HTMLfile.get(j);
+                listings workListing; //the current listing
+
+
+                while(!temp2.contains("<div style=\"po")){
+
+
+                    //gets the name
+                    if(temp2.contains("<h3 style=")){
+                        tempName=android.text.Html.fromHtml(temp2).toString();
+                    }
+
+                    //gets the image
+                    if(temp2.contains("background-position:")){
+                        regex = "'([^\"]*)'";
+                        pat = Pattern.compile(regex);
+                        m = pat.matcher(temp2);
+                        if(m.find()) {
+                            tempImage = m.group(1);
+                        }
+                    }
+
+                    //gets the price
+                    if(temp2.contains("    $ ")){
+                        tempPrice = temp2;
+                        tempPrice = tempPrice.trim();
+                        if(tempPrice.equals(""))
+                            tempPrice="error";
+                    }
+
+                    j++;
+                    if(j<HTMLfile.size())
+                        temp2=HTMLfile.get(j);
+                    else
+                        break;
+                }
+                //if the listing does not have an image, replace it with a default one
+                if(tempImage.equals(""))
+                    tempImage="http://i.imgur.com/wqjK8ZG.png";
+
+                //create the listing
+                workListing = new listings(tempImage,tempName,tempPrice, tempURL);
+
+                //add the listing to the list
+                //if the item has already been added, do not.
+                add(workListing);
+            }
+
+        }
+
 
     }//parse listings
+
+    private String parseItem(int i) {
+        String item = "";
+
+        return item;
+    }
 
 
     String parseImage(int index) {
         String output = "";
 
         for(int i = index; i < (index+10); i++) {
-            if(HTMLfile.get(i).contains("background-size: cover; background-repeat: no-repeat; background-image:")) {
+            if(HTMLfile.get(i).contains("background-repeat: no-repeat; background-image:")) {
                 output = "[IMAGE]";
             }
         }
@@ -97,30 +151,6 @@ public class ArmsListHandler extends website {
         return(output);
 
     }
-
-
-
-    int getTotalNumberofPages() {
-        int output = 0;
-        String temp = "";
-        String[] tempA;
-        String[] tempB;
-        HTMLfile = getURL(URL);
-        for(int i = 0; i < HTMLfile.size(); i++) {
-            if(HTMLfile.get(i).contains(" results in All Categories")) {
-                temp = HTMLfile.get(i);
-                break;
-            }//if
-        }//for
-
-//		System.out.println(temp);
-        tempA = temp.split(" of ");
-        int per = Integer.parseInt(tempA[0].substring(16));
-//		System.out.println(per);
-        int total = Integer.parseInt(tempA[1].substring(0,tempA[1].length()- 31));
-
-        return((int)Math.ceil((double)total/per));
-    }//getTotalNumberofpages
 
 
 }//armslisthandler

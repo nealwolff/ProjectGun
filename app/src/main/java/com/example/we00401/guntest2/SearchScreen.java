@@ -122,6 +122,19 @@ public class SearchScreen extends AppCompatActivity {
                 adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         arrayList.remove(positionToRemove);
+                        if(gun){
+                            gunListings.remove(positionToRemove);
+                        }else if(AK){
+                            akListings.remove(positionToRemove);
+                        }else if(arms){
+                            armsListings.remove(positionToRemove);
+                        }else if(CAL){
+                            calListings.remove(positionToRemove);
+                        }else if(america){
+                            americaListings.remove(positionToRemove);
+                        }else if(FAL){
+                            falListings.remove(positionToRemove);
+                        }
                         lv.invalidateViews();
                     }});
                 adb.show();
@@ -197,6 +210,8 @@ public class SearchScreen extends AppCompatActivity {
                                 GunsamericaFinder(theSearchTerm);
                             if(CAL)
                                 CalgunsFinder(theSearchTerm);
+                            if(arms)
+                                ArmslistFinder(theSearchTerm);
 
                             dialog.dismiss();
 
@@ -257,11 +272,24 @@ public class SearchScreen extends AppCompatActivity {
                 america = false;
                 FAL = false;
                 setArraylist(armsListings); //if the current search term has listings, load them
-
-                if(!theSearchTerm.equals("!none")){
-                    //toDO create armslistFinder
-                }
                 lv.invalidateViews();//refresh the listings
+
+                //if there is currently a search
+                if(!theSearchTerm.equals("!none")){
+                    new AlertDialog.Builder(SearchScreen.this)
+                            .setTitle("Decision")
+                            .setMessage("Do you wish to find new items since the last search?" +
+                                    "\nNote: It can take 30 seconds to search for new results")
+                            .setNegativeButton(android.R.string.cancel, null) // dismisses by default
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ArmslistFinder(theSearchTerm);
+                                    lv.invalidateViews();//refresh the listings
+                                }
+                            })
+                            .create()
+                            .show();
+                }
             }
         });
 
@@ -540,6 +568,33 @@ public class SearchScreen extends AppCompatActivity {
 
             //create a linked list of strings containing all the urls for duplicate comparison
             akDuplicate.add(0,listing.getURL());
+
+        }
+
+        lv.invalidateViews();
+
+    }
+    public void ArmslistFinder(String searchTerm){
+        Toast.makeText(getApplicationContext(),
+                "Searching " + searchTerm + " can take 30 seconds", Toast.LENGTH_LONG).show();
+
+        ArmsListHandler armsH = new ArmsListHandler(searchTerm);
+        armsH.print();
+
+        List<listings> armsList = armsH.getListings();
+
+        if(armsList.size()==0) {
+            Toast.makeText(getApplicationContext(),
+                    "No Items found", Toast.LENGTH_LONG).show();
+            return;
+        }
+        for (int i = armsList.size() - 1; i >= 0; i--) {
+            listings listing = armsList.get(i);
+            arrayList.add(0, listing);
+            armsListings.add(0, listing);
+
+            //create a linked list of strings containing all the urls for duplicate comparison
+            armsDuplicate.add(0,listing.getURL());
 
         }
 
