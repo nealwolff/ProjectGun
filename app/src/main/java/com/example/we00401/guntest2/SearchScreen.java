@@ -189,6 +189,14 @@ public class SearchScreen extends AppCompatActivity {
                             //checks which tab the user is on
                             if(gun)
                                 FindGunbroker(theSearchTerm, cattegory);
+                            if(AK)
+                                AkfilesFinder(theSearchTerm);
+                            if (FAL)
+                                FalfilesFinder(theSearchTerm);
+                            if(america)
+                                GunsamericaFinder(theSearchTerm);
+                            if(CAL)
+                                CalgunsFinder(theSearchTerm);
 
                             dialog.dismiss();
 
