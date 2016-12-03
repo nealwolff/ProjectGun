@@ -114,6 +114,8 @@ public class gunsAmericaHandler extends website {
                 output[1] = parseName(file.get(i));
                 output[3] = parseURL(file.get(i));
 
+
+
                 //find that price
                 for(int j = listingIndex; j < file.size(); j++){
                     if(file.get(j).contains("<span itemprop=\"price\">")) {
@@ -122,7 +124,7 @@ public class gunsAmericaHandler extends website {
                         break;
                     }
                 }
-
+                output[3] = "https"+output[3].substring(4,output[3].length());
 //				System.out.println(output[2]);
                 System.out.println("\nImgURL:\t"+output[0]);
                 System.out.println("Name:\t"+output[1]);
@@ -197,7 +199,7 @@ public class gunsAmericaHandler extends website {
 
         Matcher cupid = p.matcher(input);
         cupid.find();
-        output = "http://www.gunsamerica.com"+cupid.group(1);
+        output = "https://www.gunsamerica.com"+cupid.group(1);
 
         return output;
     }
@@ -223,10 +225,7 @@ public class gunsAmericaHandler extends website {
         }
         //remove rest of "src=\""
         count = count+4;
-        holding = "http://www.gunsamerica.com";
-        for(int i = count; i < input.length(); i++) {
-            holding += input.charAt(i);
-        }
+        holding = "https://www.gunsamerica.com" + input;
 
 
         //remove backs stuff
