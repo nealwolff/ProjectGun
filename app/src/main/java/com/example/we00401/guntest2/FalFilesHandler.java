@@ -240,7 +240,7 @@ public class FalFilesHandler extends website {
 				output[0] = "http://i.imgur.com/wqjK8ZG.png";
 				
 				output[2] = parsePrice(temp); // not everything has a price in it, but parse the first moneybags it sees
-				output[3] = praseURL(i,input);
+				output[3] = "http://"+praseURL(i,input);
 				//why does akfiles link to dead threads?
 				if(output[3].equals("http://www.akfiles.com/forums/f=")) {
 					continue;
