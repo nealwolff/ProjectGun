@@ -122,90 +122,10 @@ public class CalGunsHandler extends website {
             }
             //</ghetto debug>
     		System.out.println("^Parsing Page "+i);
-    		try{
-    			parseListing(HTMLfile);
-    		} catch(Exception e) {
-    			System.out.println(e);
-    		}
+    		parseListing(HTMLfile);
             
 
         }//end loop step 3 i-loop
-
-
-
-        //navigate the current page
-//        for (int i =0;i<HTMLfile.size();i++) {
-//
-//            String temp = HTMLfile.get(i);
-//
-//            if (temp.contains("<td><a class=\"ItmTLnk\"")){
-//                int j = i+1;
-//                String temp2=HTMLfile.get(j);
-//                listings workListing; //the current listing
-//                String tempURL = ""; //Listing URL
-//                String tempName = ""; //Listing name
-//                String tempImage = ""; //the listing image
-//                String tempPrice = ""; //the listing price
-//
-//                while(!temp2.contains("<td><a class=\"ItmTLnk\"")){
-//
-//
-//
-//                    //gets the listing URL
-//                    if(temp2.contains("<a href=\"/item")){
-//                        String regex = "\"([^\"]*)\"";
-//                        Pattern pat = Pattern.compile(regex);
-//                        Matcher m = pat.matcher(temp2);
-//                        if(m.find()) {
-//                            tempURL = "http://www.gunbroker.com" + m.group(1);
-//                        }
-//
-//                        //gets the name
-//                        //tempName = temp2.replaceAll("\\<.*?>","");
-//                        //tempName = tempName.trim();
-//                    }
-//
-//                    //gets the name
-//                    if(temp2.contains("BItmTLnk")){
-//                        tempName=android.text.Html.fromHtml(temp2).toString();
-//                    }
-//
-//                    //gets the image
-//                    if(temp2.contains("<img alt=")){
-//                        String regex = "http([^\"]*).jpg";
-//                        Pattern pat = Pattern.compile(regex);
-//                        Matcher m = pat.matcher(temp2);
-//                        if(m.find()) {
-//                            tempImage = "http" + m.group(1) + ".jpg";
-//                        }
-//                    }
-//
-//                    //gets the price
-//                    if(temp2.contains("<td class=\"lrt\">$")){
-//                        tempPrice = temp2.replaceAll("\\<.*?>","");
-//                        tempPrice = tempPrice.trim();
-//                        if(tempPrice.equals(""))
-//                            tempPrice="error";
-//                    }
-//
-//                    j++;
-//                    if(j<HTMLfile.size())
-//                        temp2=HTMLfile.get(j);
-//                    else
-//                        break;
-//                }
-//                //if the listing does not have an image, replace it with a default one
-//                if(tempImage.equals(""))
-//                    tempImage="http://i.imgur.com/wqjK8ZG.png";
-//
-//                //create the listing
-//                workListing = new listings(tempImage,tempName,tempPrice, tempURL);
-//
-//                //add the listing to the list
-//                add(workListing);
-//            }
-//
-//        }
 
     }//end of constructor
 
@@ -215,54 +135,60 @@ public class CalGunsHandler extends website {
 		String temp = "";
 		// TODO Auto-generated method stub
 		for(int i = 0; i < input.size(); i++) {
-			if(input.get(i).contains("td_threadtitle_")) {
-				//tempImage,tempName,tempPrice, tempURL
-				
+            try{
 
-				temp = input.get(i);
-				
-				
-				//So apperently AK files doesn't have its shit together,
-				//and doesnt put the entire tag on the same line
-				//the tag seems to end whenever it likes, so i had to 
-				//improvise in order to find out where the hell the tag
-				//decides to come to an end
-				if(input.get(i).contains(">") != true) {
-					for(int j = i+1; j < input.size(); j++) {
-						temp += input.get(j);
-						if(temp.contains(">")) {
-							break;
-						}
-					}
-				}
-				
+                if(input.get(i).contains("td_threadtitle_")) {
+                    //tempImage,tempName,tempPrice, tempURL
+
+
+                    temp = input.get(i);
+
+
+                    //So apperently AK files doesn't have its shit together,
+                    //and doesnt put the entire tag on the same line
+                    //the tag seems to end whenever it likes, so i had to
+                    //improvise in order to find out where the hell the tag
+                    //decides to come to an end
+                    if(input.get(i).contains(">") != true) {
+                        for(int j = i+1; j < input.size(); j++) {
+                            temp += input.get(j);
+                            if(temp.contains(">")) {
+                                break;
+                            }
+                        }
+                    }
+
 //				System.out.print(i+"\t");
-				
-				output[1] = parseName(temp);
-				
-				//if its not what we are looking for then fuckit
-				if(relevantResult(output[1]) != true) {
-					continue;
-				}
-				
-				output[1] = parseTitle(i, input);
-				
-				
-				output[0] = "http://i.imgur.com/wqjK8ZG.png";
-				
-				output[2] = parsePrice(temp); // not everything has a price in it, but parse the first moneybags it sees
-				output[3] = praseURL(i,input);
-				//why does akfiles link to dead threads?
+
+                    output[1] = parseName(temp);
+
+                    //if its not what we are looking for then fuckit
+                    if(relevantResult(output[1]) != true) {
+                        continue;
+                    }
+
+                    output[1] = parseTitle(i, input);
+
+
+                    output[0] = "http://i.imgur.com/wqjK8ZG.png";
+
+                    output[2] = parsePrice(temp); // not everything has a price in it, but parse the first moneybags it sees
+                    output[3] = praseURL(i,input);
+                    //why does akfiles link to dead threads?
 //				if(output[3].equals("http://www.akfiles.com/forums/f=")) {
 //					continue;
 //				}
-				System.out.println("ITEM:\t"+output[1]);
-				System.out.println("PRICE:\t"+output[2]);
-				System.out.println("URL:\t"+output[3]);
-				System.out.println();
-				add(new listings(output[0],output[1],output[2],output[3]));
-			}
+                    System.out.println("ITEM:\t"+output[1]);
+                    System.out.println("PRICE:\t"+output[2]);
+                    System.out.println("URL:\t"+output[3]);
+                    System.out.println();
+                    add(new listings(output[0],output[1],output[2],output[3]));
+                }
+            }catch(Exception e){
+                System.out.println("exception on line " +i);
+            }
 		}
+
 		
 	}
 

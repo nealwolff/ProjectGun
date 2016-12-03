@@ -120,82 +120,6 @@ public class FalFilesHandler extends website {
 
         }//end loop step 3 i-loop
 
-
-
-        //navigate the current page
-//        for (int i =0;i<HTMLfile.size();i++) {
-//
-//            String temp = HTMLfile.get(i);
-//
-//            if (temp.contains("<td><a class=\"ItmTLnk\"")){
-//                int j = i+1;
-//                String temp2=HTMLfile.get(j);
-//                listings workListing; //the current listing
-//                String tempURL = ""; //Listing URL
-//                String tempName = ""; //Listing name
-//                String tempImage = ""; //the listing image
-//                String tempPrice = ""; //the listing price
-//
-//                while(!temp2.contains("<td><a class=\"ItmTLnk\"")){
-//
-//
-//
-//                    //gets the listing URL
-//                    if(temp2.contains("<a href=\"/item")){
-//                        String regex = "\"([^\"]*)\"";
-//                        Pattern pat = Pattern.compile(regex);
-//                        Matcher m = pat.matcher(temp2);
-//                        if(m.find()) {
-//                            tempURL = "http://www.gunbroker.com" + m.group(1);
-//                        }
-//
-//                        //gets the name
-//                        //tempName = temp2.replaceAll("\\<.*?>","");
-//                        //tempName = tempName.trim();
-//                    }
-//
-//                    //gets the name
-//                    if(temp2.contains("BItmTLnk")){
-//                        tempName=android.text.Html.fromHtml(temp2).toString();
-//                    }
-//
-//                    //gets the image
-//                    if(temp2.contains("<img alt=")){
-//                        String regex = "http([^\"]*).jpg";
-//                        Pattern pat = Pattern.compile(regex);
-//                        Matcher m = pat.matcher(temp2);
-//                        if(m.find()) {
-//                            tempImage = "http" + m.group(1) + ".jpg";
-//                        }
-//                    }
-//
-//                    //gets the price
-//                    if(temp2.contains("<td class=\"lrt\">$")){
-//                        tempPrice = temp2.replaceAll("\\<.*?>","");
-//                        tempPrice = tempPrice.trim();
-//                        if(tempPrice.equals(""))
-//                            tempPrice="error";
-//                    }
-//
-//                    j++;
-//                    if(j<HTMLfile.size())
-//                        temp2=HTMLfile.get(j);
-//                    else
-//                        break;
-//                }
-//                //if the listing does not have an image, replace it with a default one
-//                if(tempImage.equals(""))
-//                    tempImage="http://i.imgur.com/wqjK8ZG.png";
-//
-//                //create the listing
-//                workListing = new listings(tempImage,tempName,tempPrice, tempURL);
-//
-//                //add the listing to the list
-//                add(workListing);
-//            }
-//
-//        }
-
     }//end of constructor
 
     //find the listings on each forum page, and turn them into listings
@@ -272,36 +196,40 @@ public class FalFilesHandler extends website {
 		String pattern = "<a[^>]+href\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>";
 		
 		for(int i = index; i < input.size(); i++) {
-			if(input.get(i).contains("<a ")) {
+			try{
+				if(input.get(i).contains("<a ")) {
 //				System.out.println(input.get(i));
-				temp = input.get(i).substring(12);
-				//OKAY REGEX, BE THAT WAY, SEE IF I CARE
-				for(int j = 0; j < temp.length(); j++) {
-					if(temp.charAt(j) == '"') {
-						temp = temp.substring(0, j);
-						
-						//remove "&amp;" and just have '&'
-						for(int k = 0; k < temp.length(); k++) {
-							if(temp.charAt(k) == '&') {
-								temp = temp.substring(0, k+1) + temp.substring(k+5);
+					temp = input.get(i).substring(12);
+					//OKAY REGEX, BE THAT WAY, SEE IF I CARE
+					for(int j = 0; j < temp.length(); j++) {
+						if(temp.charAt(j) == '"') {
+							temp = temp.substring(0, j);
+
+							//remove "&amp;" and just have '&'
+							for(int k = 0; k < temp.length(); k++) {
+								if(temp.charAt(k) == '&') {
+									temp = temp.substring(0, k+1) + temp.substring(k+5);
+								}
 							}
+							break;
 						}
-						break;
 					}
-				}
-				if(temp.equals("f=")) {
-					System.out.print("u wut m8?");
-					return("http://www.akfiles.com/forums/f=");
-				}
-				
-				for(int kek = 0; kek < temp.length(); kek++) {
-					if(temp.charAt(kek) == '&') {
-						temp = temp.substring(kek+1,temp.length());
+					if(temp.equals("f=")) {
+						System.out.print("u wut m8?");
+						return("http://www.akfiles.com/forums/f=");
 					}
-				}
+
+					for(int kek = 0; kek < temp.length(); kek++) {
+						if(temp.charAt(kek) == '&') {
+							temp = temp.substring(kek+1,temp.length());
+						}
+					}
 //				http://www.falfiles.com/forums/forumdisplay.php?f=11&order=desc&page=2
 //				return("http://www.akfiles.com/forums/"+temp);
-				return("www.falfiles.com/forums/showthread.php?"+temp);
+					return("www.falfiles.com/forums/showthread.php?"+temp);
+				}
+			}catch(Exception e){
+				System.out.println("exception at line " +i);
 			}
 		}
 //		
