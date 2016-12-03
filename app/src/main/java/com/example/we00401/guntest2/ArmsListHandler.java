@@ -70,7 +70,7 @@ public class ArmsListHandler extends website {
 
 
                     //gets the name
-                    if(temp2.contains("<h3 style=")){
+                    if(temp2.contains("<a style=\"color: #e0dbb3; font-weight: bold;")){
                         tempName=android.text.Html.fromHtml(temp2).toString();
                     }
 
