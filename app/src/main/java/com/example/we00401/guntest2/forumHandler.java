@@ -79,8 +79,11 @@ public class forumHandler extends website {
                         }
                         List<listings> theTemps = getListings();
                         //if the object already exists, do not add, continue to the next.
-                        if (urls.contains(tempURL))
+                        if (urls.contains(tempURL)) {
+                            tempURL = "failed";
                             break;
+
+                        }
                         else if(theTemps.contains(tempURL)){
                             break;
                         }

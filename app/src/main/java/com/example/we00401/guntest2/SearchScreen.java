@@ -334,20 +334,8 @@ public class SearchScreen extends AppCompatActivity {
 
                 //if there is currently a search
                 if(!theSearchTerm.equals("!none")){
-                    new AlertDialog.Builder(SearchScreen.this)
-                            .setTitle("Decision")
-                            .setMessage("Do you wish to find new items since the last search?" +
-                                    "\nNote: It will take 30 seconds to search for new results")
-                            .setNegativeButton(android.R.string.cancel, null) // dismisses by default
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    FalfilesFinder(theSearchTerm);
-                                    lv.invalidateViews();//refresh the listings
-                                }
-                            })
-                            .create()
-                            .show();
-
+                    FalfilesFinder(theSearchTerm);
+                    lv.invalidateViews();//refresh the listings
                 }
 
             }
@@ -399,7 +387,7 @@ public class SearchScreen extends AppCompatActivity {
                     new AlertDialog.Builder(SearchScreen.this)
                             .setTitle("Decision")
                             .setMessage("Do you wish to find new items since the last search?" +
-                                    "\nNote: It will take 30 seconds to search for new results")
+                                    "\nNote: It will take 60 seconds to search for new results")
                             .setNegativeButton(android.R.string.cancel, null) // dismisses by default
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
@@ -958,7 +946,7 @@ public class SearchScreen extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
 
                         public void run() {
-                            pdialog.setMessage("Loading. Please wait...\nNote, searching 100 pages of listings, can take around 2 minutes\n"+
+                            pdialog.setMessage("Loading. Please wait...\nNote, searching 100 pages of listings, can take about 60 seconds\n"+
                                     "you can stop this on whatever page you desire\nOn page: " + page + " of " + 100);
                         }
                     });
