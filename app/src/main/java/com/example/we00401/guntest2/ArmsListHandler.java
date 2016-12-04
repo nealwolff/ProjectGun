@@ -1,54 +1,74 @@
 package com.example.we00401.guntest2;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ArmsListHandler extends website {
-
+    String pageNum;
     String globalSearchString = "";
     //	int pages = 0;
     String URL = "";
     List<String> HTMLfile;
 
 
-    public ArmsListHandler(String search) {
+    public ArmsListHandler(String search,String cat, ArrayList<String> urls, int pageNum) {
         globalSearchString = search;
 
-        URL = "https://www.armslist.com/classifieds/search?location=usa&category=all";
 
+        URL = "https://www.armslist.com/classifieds/search?location=usa&page="+pageNum+"&search="+search;
 
-        int pagecount = 1;
-        while(true) {
-            URL = "https://www.armslist.com/classifieds/search?location=usa&page="+pagecount+"&search="+search;
-            HTMLfile = getURL(URL);
-            System.out.println(pagecount);
-            if(containsResults(URL) != true) {
-                break;
-            } else {
-                try {
-                    parseListings();
-                } catch (Exception e) {
-                    System.out.println("Page: " + pagecount + "\n" + e);
-                }
-
-            }
-            pagecount++;
+        if(cat.contains("Semi-Auto pistols")){
+            URL += "&category=handguns";
+        }else if(cat.contains("Revolvers")){
+            URL += "&category=handguns";
+        }else if(cat.contains("Semi-Auto rifles")){
+            URL += "&category=rifles";
+        }else if(cat.contains("Bolt-Action rifles")){
+            URL += "&category=rifles";
+        }else if(cat.contains("Shotguns")){
+            URL += "&category=shotguns";
+        }else{
+            URL += "&category=guns";
         }
+
+        HTMLfile = getURL(URL);
+
+        parseListings(urls);
+
 
     }//constructor
 
 
 
     //parse listings
-    void parseListings() {
+    void parseListings(ArrayList<String> urls) {
         String[] output = new String[4];
 
         for (int i =0;i<HTMLfile.size();i++) {
 
             String temp = HTMLfile.get(i);
 
+            if(temp.contains("'>NEXT PAGE")){
+                String kek=android.text.Html.fromHtml(temp).toString();
+                String regex = "\n([^\"]*)\nNEXT PAGE";
+                Pattern pat = Pattern.compile(regex);
+                Matcher m = pat.matcher(kek);
+                if(m.find()) {
+                    kek = m.group(1);
+                }
+                Scanner scanner = new Scanner(kek);
+                while (scanner.hasNextLine()) {
+                    pageNum= scanner.nextLine();
+                }
+                scanner.close();
+
+                System.out.println(pageNum);
+            }
+
             if (temp.contains("<div style=\"po")){
-                String tempURL = ""; ///Listing URL
+                String tempURL = "error"; ///Listing URL
                 String tempName = ""; //Listing name
                 String tempImage = ""; //the listing image
                 String tempPrice = ""; //the listing price
@@ -59,6 +79,11 @@ public class ArmsListHandler extends website {
                 Matcher m = pat.matcher(temp);
                 if(m.find()) {
                     tempURL = "http://www.armslist.com" + m.group(1);
+                }
+                //if the object already exists, do not add, continue to the next.
+                if(urls.contains(tempURL)) {
+                    tempURL = "error";
+                    continue;
                 }
 
                 int j = i+1;
@@ -107,50 +132,14 @@ public class ArmsListHandler extends website {
 
                 //add the listing to the list
                 //if the item has already been added, do not.
-                add(workListing);
+                if(!tempURL.equals("error"))
+                    add(workListing);
             }
 
         }
 
 
     }//parse listings
-
-    private String parseItem(int i) {
-        String item = "";
-
-        return item;
-    }
-
-
-    String parseImage(int index) {
-        String output = "";
-
-        for(int i = index; i < (index+10); i++) {
-            if(HTMLfile.get(i).contains("background-repeat: no-repeat; background-image:")) {
-                output = "[IMAGE]";
-            }
-        }
-        return(output);
-    }
-
-
-
-    //checks if current page has results
-    boolean containsResults(String input) {
-        boolean output = true;
-
-        HTMLfile = getURL(input);
-
-        for(int i = 0; i<HTMLfile.size();i++) {
-            if(HTMLfile.get(i).contains("No active listings.")) {
-                output = false;
-                break;
-            }
-        }
-
-        return(output);
-
-    }
 
 
 }//armslisthandler

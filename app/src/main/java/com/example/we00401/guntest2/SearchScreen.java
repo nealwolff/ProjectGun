@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -146,7 +147,7 @@ public class SearchScreen extends AppCompatActivity {
                     }});
                 adb.show();
 
-                System.out.println("long clicked");
+                //System.out.println("long clicked");
 
                 return true;
             }
@@ -218,7 +219,7 @@ public class SearchScreen extends AppCompatActivity {
                             if(CAL)
                                 CalgunsFinder(theSearchTerm);
                             if(arms)
-                                ArmslistFinder(theSearchTerm);
+                                ArmslistFinder(theSearchTerm,cattegory);
 
                             dialog.dismiss();
 
@@ -278,25 +279,15 @@ public class SearchScreen extends AppCompatActivity {
                 CAL =false;
                 america = false;
                 FAL = false;
-                setArraylist(armsListings); //if the current search term has listings, load them
-                lv.invalidateViews();//refresh the listings
 
-                //if there is currently a search
+                setArraylist(armsListings); //if the current search term has listings, load them
+
+
                 if(!theSearchTerm.equals("!none")){
-                    new AlertDialog.Builder(SearchScreen.this)
-                            .setTitle("Decision")
-                            .setMessage("Do you wish to find new items since the last search?" +
-                                    "\nNote: It can take 30 seconds to search for new results")
-                            .setNegativeButton(android.R.string.cancel, null) // dismisses by default
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    ArmslistFinder(theSearchTerm);
-                                    lv.invalidateViews();//refresh the listings
-                                }
-                            })
-                            .create()
-                            .show();
+                    ArmslistFinder(theSearchTerm, cattegory);
                 }
+
+                lv.invalidateViews();//refresh the listings
             }
         });
 
@@ -558,83 +549,357 @@ public class SearchScreen extends AppCompatActivity {
 
     public void AkfilesFinder(String searchTerm){
         Toast.makeText(getApplicationContext(),
-                "Searching " + searchTerm + " can take 30 seconds", Toast.LENGTH_LONG).show();
+                "Searching " + searchTerm + " on the AKfiles", Toast.LENGTH_LONG).show();
 
-        akFilesHandler AKH = new akFilesHandler(searchTerm,akDuplicate);
-        List<listings> AKList = AKH.getListings();
+        allPages.clear();
 
-        if(AKList.size()==0) {
-            Toast.makeText(getApplicationContext(),
-                    "No Items found", Toast.LENGTH_LONG).show();
-            return;
-        }
-        for (int i = AKList.size() - 1; i >= 0; i--) {
-            listings listing = AKList.get(i);
-            arrayList.add(0, listing);
-            akListings.add(0, listing);
+        final Thread t = new Thread() {
+            public void run() {
 
-            //create a linked list of strings containing all the urls for duplicate comparison
-            akDuplicate.add(0,listing.getURL());
+                int pagenum=0;
+                check = true;
+                while(pagenum<40) {
+                    pagenum++;
+                    //ArrayList<String> compares = getGlobalArraylist();
+                    forumHandler GBH = new forumHandler(theSearchTerm,akDuplicate,"akfiles",cattegory,pagenum);
+                    List<listings> GBList = GBH.getListings();
+                    //GBH.print();
+                    //System.out.println("page number: " + pagenum);
 
-        }
+                    if(!check){
+                        check=true;
+                        break;
+                    }
+                    if (GBList.size() != 0) {
+                        allPages.add(GBList);
+                    }
 
-        lv.invalidateViews();
+
+                    final int page = pagenum;
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+                            pdialog.setMessage("Loading. Please wait...\nNote, searching 40 pages of listings, can take up to 30 seconds\n"+
+                                    "you can stop this on whatever page you desire\nOn page: " + page + " of " + 40);
+                        }
+                    });
+
+                }
+
+                //traveres the pages and add the objects to their respective lists.
+                for(int j = allPages.size()-1;j>=0;j--) {
+
+                    //if nothing was found
+                    if(allPages.size()==0){
+                        Toast.makeText(getApplicationContext(),
+                                "No Items found", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+
+                    //get the page
+                    List<listings> GBList = allPages.get(j);
+                    //get the akfiles listings from that page
+                    for (int i = GBList.size() - 1; i >= 0; i--) {
+                        listings listing = GBList.get(i);
+                        arrayList.add(0, listing);
+                        akListings.add(0, listing);
+
+                        //create a linked list of strings containing all the urls for duplicate comparison
+                        akDuplicate.add(0,listing.getURL());
+                    }
+
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+                            lv.invalidateViews();
+                        }
+                    });
+
+                }
+
+                runOnUiThread(new Runnable() {
+
+                    public void run() {
+                        if (arrayList.size() == 0) {
+                            Toast.makeText(getApplicationContext(),
+                                    "No Items found", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                });
+                handler.sendEmptyMessage(0);
+            }
+
+        };
+
+
+
+
+
+        pdialog = new ProgressDialog(SearchScreen.this); // this = YourActivity
+        pdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pdialog.setMessage("Loading. Please wait...\nIf your term was too broad this could take some time");
+        pdialog.setIndeterminate(true);
+        pdialog.setCanceledOnTouchOutside(false);
+        pdialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Stop Search", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                check=false;
+            }
+        });
+        pdialog.show();
+
+        t.start();
+
+        handler = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                pdialog.dismiss();
+            };
+        };
+
+
+
 
     }
-    public void ArmslistFinder(String searchTerm){
+
+    //find armslist listings
+    public void ArmslistFinder(String searchTerm, String grpname){
         Toast.makeText(getApplicationContext(),
-                "Searching " + searchTerm + " can take 30 seconds", Toast.LENGTH_LONG).show();
+                "Searching " + searchTerm + " in \""+grpname+"\"", Toast.LENGTH_LONG).show();
 
-        ArmsListHandler armsH = new ArmsListHandler(searchTerm);
-        armsH.print();
 
-        List<listings> armsList = armsH.getListings();
+        final String temp=searchTerm.replaceAll("\\s","+");
+        //testHandler test = new testHandler();
+        //if the gunbroker checkbox is clicked, search gunbroker.
 
-        if(armsList.size()==0) {
-            Toast.makeText(getApplicationContext(),
-                    "No Items found", Toast.LENGTH_LONG).show();
-            return;
-        }
-        for (int i = armsList.size() - 1; i >= 0; i--) {
-            listings listing = armsList.get(i);
-            arrayList.add(0, listing);
-            armsListings.add(0, listing);
 
-            //create a linked list of strings containing all the urls for duplicate comparison
-            armsDuplicate.add(0,listing.getURL());
 
-        }
+        allPages.clear();
 
-        lv.invalidateViews();
+        final String grpname2= grpname;
+        final Thread t = new Thread() {
+            public void run() {
+
+                int pagenum=0;
+                check = true;
+                String theFinalPageNum="kek";
+                while(check) {
+                    pagenum++;
+                    //ArrayList<String> compares = getGlobalArraylist();
+                    ArmsListHandler GBH = new ArmsListHandler(temp, grpname2, armsDuplicate, pagenum);
+                    List<listings> GBList = GBH.getListings();
+
+                    if(theFinalPageNum.equals("kek"))
+                        theFinalPageNum=GBH.pageNum;
+
+                    if (GBList.size() == 0) {
+                        break;
+                    }
+                    allPages.add(GBList);
+
+                    if(!check){
+                        check=true;
+                        break;
+                    }
+
+                    final int page = pagenum;
+                    final String finalPage = theFinalPageNum;
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+                            pdialog.setMessage("Loading. Please wait...\nNote, if your term was too broad this could take some time\n"+
+                                    " On page: " + page + " of " + finalPage);
+                        }
+                    });
+                }
+
+                //traveres the pages and add the objects to their respective lists.
+                for(int j = allPages.size()-1;j>=0;j--) {
+
+                    //if nothing was found
+                    if(allPages.size()==0){
+                        Toast.makeText(getApplicationContext(),
+                                "No Items found", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+
+                    //get the page
+                    List<listings> GBList = allPages.get(j);
+                    //get the gunbroker listings from that page
+                    for (int i = GBList.size() - 1; i >= 0; i--) {
+                        listings listing = GBList.get(i);
+                        arrayList.add(0, listing);
+                        armsListings.add(0, listing);
+
+                        //create a linked list of strings containing all the urls for duplicate comparison
+                        armsDuplicate.add(0,listing.getURL());
+                    }
+
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+                            lv.invalidateViews();
+                        }
+                    });
+
+                }
+
+                runOnUiThread(new Runnable() {
+
+                    public void run() {
+                        if (arrayList.size() == 0) {
+                            Toast.makeText(getApplicationContext(),
+                                    "No Items found", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                });
+                handler.sendEmptyMessage(0);
+            }
+
+        };
+
+
+
+
+
+        pdialog = new ProgressDialog(SearchScreen.this); // this = YourActivity
+        pdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pdialog.setMessage("Loading. Please wait...\nIf your term was too broad this could take some time");
+        pdialog.setIndeterminate(true);
+        pdialog.setCanceledOnTouchOutside(false);
+        pdialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Stop Search", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                check=false;
+            }
+        });
+        pdialog.show();
+
+        t.start();
+
+        handler = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                pdialog.dismiss();
+            };
+        };//*/
+
+
+
 
     }
 
     public void FalfilesFinder(String searchTerm){
         Toast.makeText(getApplicationContext(),
-                "Searching " + searchTerm + " can take 30 seconds", Toast.LENGTH_LONG).show();
+                "Searching " + searchTerm + " on the FALfiles", Toast.LENGTH_LONG).show();
 
-        FalFilesHandler FALH = new FalFilesHandler(searchTerm);
-        List<listings> FALList = FALH.getListings();
+        allPages.clear();
 
-        if(FALList.size()==0) {
-            Toast.makeText(getApplicationContext(),
-                    "No Items found", Toast.LENGTH_LONG).show();
-            return;
-        }
-        for (int i = FALList.size() - 1; i >= 0; i--) {
-            listings listing = FALList.get(i);
-            arrayList.add(0, listing);
-            falListings.add(0, listing);
+        final Thread t = new Thread() {
+            public void run() {
 
-            //create a linked list of strings containing all the urls for duplicate comparison
-            falDupilcate.add(0,listing.getURL());
+                int pagenum=0;
+                check = true;
+                while(pagenum<3) {
+                    pagenum++;
+                    //ArrayList<String> compares = getGlobalArraylist();
+                    forumHandler GBH = new forumHandler(theSearchTerm,falDupilcate,"falfiles",cattegory,pagenum);
+                    List<listings> GBList = GBH.getListings();
+                    GBH.print();
+                    System.out.println("page number: " + pagenum);
 
-        }
+                    if(!check){
+                        check=true;
+                        break;
+                    }
+                    if (GBList.size() != 0) {
+                        allPages.add(GBList);
+                    }
 
-        lv.invalidateViews();
+
+                    final int page = pagenum;
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+                            pdialog.setMessage("Searching. Please wait...\nOn page: " + page + " of " + 3);
+                        }
+                    });
+
+                }
+
+                //traveres the pages and add the objects to their respective lists.
+                for(int j = allPages.size()-1;j>=0;j--) {
+
+                    //if nothing was found
+                    if(allPages.size()==0){
+                        Toast.makeText(getApplicationContext(),
+                                "No Items found", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+
+                    //get the page
+                    List<listings> GBList = allPages.get(j);
+                    //get calguns listings from that page
+                    for (int i = GBList.size() - 1; i >= 0; i--) {
+                        listings listing = GBList.get(i);
+                        arrayList.add(0, listing);
+                        falListings.add(0, listing);
+
+                        //create a linked list of strings containing all the urls for duplicate comparison
+                        falDupilcate.add(0,listing.getURL());
+                    }
+
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+                            lv.invalidateViews();
+                        }
+                    });
+
+                }
+
+                runOnUiThread(new Runnable() {
+
+                    public void run() {
+                        if (arrayList.size() == 0) {
+                            Toast.makeText(getApplicationContext(),
+                                    "No Items found", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                });
+                handler.sendEmptyMessage(0);
+            }
+
+        };
+
+
+
+
+
+        pdialog = new ProgressDialog(SearchScreen.this); // this = YourActivity
+        pdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pdialog.setMessage("Loading. Please wait...\nIf your term was too broad this could take some time");
+        pdialog.setIndeterminate(true);
+        pdialog.setCanceledOnTouchOutside(false);
+        pdialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Stop Search", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                check=false;
+            }
+        });
+        pdialog.show();
+
+        t.start();
+
+        handler = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                pdialog.dismiss();
+            };
+        };
+
 
     }
-
     public void GunsamericaFinder(String searchTerm){
         Toast.makeText(getApplicationContext(),
                 "Searching " + searchTerm + " can take 30 seconds", Toast.LENGTH_LONG).show();
@@ -663,27 +928,114 @@ public class SearchScreen extends AppCompatActivity {
 
     public void CalgunsFinder(String searchTerm){
         Toast.makeText(getApplicationContext(),
-                "Searching " + searchTerm + " can take 30 seconds", Toast.LENGTH_LONG).show();
+                "Searching " + searchTerm + " on CalGuns", Toast.LENGTH_LONG).show();
 
-        CalGunsHandler CALH = new CalGunsHandler(searchTerm);
-        List<listings> CALList = CALH.getListings();
+        allPages.clear();
 
-        if(CALList.size()==0) {
-            Toast.makeText(getApplicationContext(),
-                    "No Items found", Toast.LENGTH_LONG).show();
-            return;
-        }
-        for (int i = CALList.size() - 1; i >= 0; i--) {
-            listings listing = CALList.get(i);
-            arrayList.add(0, listing);
-            calListings.add(0, listing);
+        final Thread t = new Thread() {
+            public void run() {
 
-            //create a linked list of strings containing all the urls for duplicate comparison
-            calDuplicate.add(0,listing.getURL());
+                int pagenum=0;
+                check = true;
+                while(pagenum<100) {
+                    pagenum++;
+                    //ArrayList<String> compares = getGlobalArraylist();
+                    forumHandler GBH = new forumHandler(theSearchTerm,calDuplicate,"calguns", cattegory,pagenum);
+                    List<listings> GBList = GBH.getListings();
+                    GBH.print();
+                    System.out.println("page number: " + pagenum);
 
-        }
+                    if(!check){
+                        check=true;
+                        break;
+                    }
+                    if (GBList.size() != 0) {
+                        allPages.add(GBList);
+                    }
 
-        lv.invalidateViews();
+
+                    final int page = pagenum;
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+                            pdialog.setMessage("Loading. Please wait...\nNote, searching 100 pages of listings, can take around 2 minutes\n"+
+                                    "you can stop this on whatever page you desire\nOn page: " + page + " of " + 100);
+                        }
+                    });
+
+                }
+
+                //traveres the pages and add the objects to their respective lists.
+                for(int j = allPages.size()-1;j>=0;j--) {
+
+                    //if nothing was found
+                    if(allPages.size()==0){
+                        Toast.makeText(getApplicationContext(),
+                                "No Items found", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+
+                    //get the page
+                    List<listings> GBList = allPages.get(j);
+                    //get calguns listings from that page
+                    for (int i = GBList.size() - 1; i >= 0; i--) {
+                        listings listing = GBList.get(i);
+                        arrayList.add(0, listing);
+                        calListings.add(0, listing);
+
+                        //create a linked list of strings containing all the urls for duplicate comparison
+                        calDuplicate.add(0,listing.getURL());
+                    }
+
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+                            lv.invalidateViews();
+                        }
+                    });
+
+                }
+
+                runOnUiThread(new Runnable() {
+
+                    public void run() {
+                        if (arrayList.size() == 0) {
+                            Toast.makeText(getApplicationContext(),
+                                    "No Items found", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                });
+                handler.sendEmptyMessage(0);
+            }
+
+        };
+
+
+
+
+
+        pdialog = new ProgressDialog(SearchScreen.this); // this = YourActivity
+        pdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pdialog.setMessage("Loading. Please wait...\nIf your term was too broad this could take some time");
+        pdialog.setIndeterminate(true);
+        pdialog.setCanceledOnTouchOutside(false);
+        pdialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Stop Search", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                check=false;
+            }
+        });
+        pdialog.show();
+
+        t.start();
+
+        handler = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                pdialog.dismiss();
+            };
+        };
+
 
     }
 

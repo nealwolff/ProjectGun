@@ -69,4 +69,25 @@ abstract public class website{
         }
 
     }
+
+    //compares strings without case
+    public static boolean contains(String src, String comp) {
+        final int length = comp.length();
+        if (length == 0)
+            return true;
+
+        final char firstLo = Character.toLowerCase(comp.charAt(0));
+        final char firstUp = Character.toUpperCase(comp.charAt(0));
+
+        for (int i = src.length() - length; i >= 0; i--) {
+            final char ch = src.charAt(i);
+            if (ch != firstLo && ch != firstUp)
+                continue;
+
+            if (src.regionMatches(true, i, comp, 0, length))
+                return true;
+        }
+
+        return false;
+    }
 }
