@@ -211,13 +211,13 @@ public class SearchScreen extends AppCompatActivity {
                             if(gun)
                                 FindGunbroker(theSearchTerm,cattegory);
                             if(AK)
-                                AkfilesFinder(theSearchTerm);
+                                AkfilesFinder();
                             if (FAL)
-                                FalfilesFinder(theSearchTerm);
+                                FalfilesFinder();
                             if(america)
-                                GunsamericaFinder(theSearchTerm);
+                                GunsamericaFinder();
                             if(CAL)
-                                CalgunsFinder(theSearchTerm);
+                                CalgunsFinder();
                             if(arms)
                                 ArmslistFinder(theSearchTerm,cattegory);
 
@@ -311,7 +311,7 @@ public class SearchScreen extends AppCompatActivity {
                             .setNegativeButton(android.R.string.cancel, null) // dismisses by default
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    AkfilesFinder(theSearchTerm);
+                                    AkfilesFinder();
                                     lv.invalidateViews();//refresh the listings
                                 }
                             })
@@ -334,7 +334,7 @@ public class SearchScreen extends AppCompatActivity {
 
                 //if there is currently a search
                 if(!theSearchTerm.equals("!none")){
-                    FalfilesFinder(theSearchTerm);
+                    FalfilesFinder();
                     lv.invalidateViews();//refresh the listings
                 }
 
@@ -353,21 +353,8 @@ public class SearchScreen extends AppCompatActivity {
 
                 //if there is currently a search
                 if(!theSearchTerm.equals("!none")){
-                    new AlertDialog.Builder(SearchScreen.this)
-                            .setTitle("Decision")
-                            .setMessage("Do you wish to find new items since the last search?" +
-                                    "\nNote: It will take 30 seconds to search for new results")
-                            .setNegativeButton(android.R.string.cancel, null) // dismisses by default
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    GunsamericaFinder(theSearchTerm);
-                                    lv.invalidateViews();//refresh the listings
-                                }
-                            })
-                            .create()
-                            .show();
-
-
+                    GunsamericaFinder();
+                    lv.invalidateViews();//refresh the listings
                 }
             }
         });
@@ -391,7 +378,7 @@ public class SearchScreen extends AppCompatActivity {
                             .setNegativeButton(android.R.string.cancel, null) // dismisses by default
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    CalgunsFinder(theSearchTerm);
+                                    CalgunsFinder();
                                     lv.invalidateViews();//refresh the listings
                                 }
                             })
@@ -535,9 +522,9 @@ public class SearchScreen extends AppCompatActivity {
         lv.invalidateViews();//refresh the listings
     }
 
-    public void AkfilesFinder(String searchTerm){
+    public void AkfilesFinder(){
         Toast.makeText(getApplicationContext(),
-                "Searching " + searchTerm + " on the AKfiles", Toast.LENGTH_LONG).show();
+                "Searching " + theSearchTerm + " on the AKfiles", Toast.LENGTH_LONG).show();
 
         allPages.clear();
 
@@ -777,9 +764,9 @@ public class SearchScreen extends AppCompatActivity {
 
     }
 
-    public void FalfilesFinder(String searchTerm){
+    public void FalfilesFinder(){
         Toast.makeText(getApplicationContext(),
-                "Searching " + searchTerm + " on the FALfiles", Toast.LENGTH_LONG).show();
+                "Searching " + theSearchTerm + " on the FALfiles", Toast.LENGTH_LONG).show();
 
         allPages.clear();
 
@@ -888,35 +875,136 @@ public class SearchScreen extends AppCompatActivity {
 
 
     }
-    public void GunsamericaFinder(String searchTerm){
+
+    public void GunsamericaFinder(){
         Toast.makeText(getApplicationContext(),
-                "Searching " + searchTerm + " can take 30 seconds", Toast.LENGTH_LONG).show();
+                "Searching " + theSearchTerm + " in \""+cattegory+"\"", Toast.LENGTH_LONG).show();
 
-        gunsAmericaHandler AmericaH = new gunsAmericaHandler(searchTerm,americaDuplicate);
-        List<listings> AmericaList = AmericaH.getListings();
 
-        if(AmericaList.size()==0) {
-            Toast.makeText(getApplicationContext(),
-                    "No Items found", Toast.LENGTH_LONG).show();
-            return;
-        }
-        for (int i = AmericaList.size() - 1; i >= 0; i--) {
-            listings listing = AmericaList.get(i);
-            arrayList.add(0, listing);
-            americaListings.add(0, listing);
+        final String temp=theSearchTerm.replaceAll("\\s","+");
 
-            //create a linked list of strings containing all the urls for duplicate comparison
-            americaDuplicate.add(0,listing.getURL());
 
-        }
+        allPages.clear();
 
-        lv.invalidateViews();
+        final String grpname2= cattegory;
+        final Thread t = new Thread() {
+            public void run() {
+
+                int pagenum=0;
+                check = true;
+                String theFinalPageNum="kek";
+                while(check) {
+                    pagenum++;
+                    //ArrayList<String> compares = getGlobalArraylist();
+                    gunsAmericaHandler GBH = new gunsAmericaHandler(temp, americaDuplicate, pagenum);
+                    List<listings> GBList = GBH.getListings();
+
+                    if(theFinalPageNum.equals("kek"))
+                        theFinalPageNum=GBH.theNUM;
+
+                    if (GBList.size() == 0) {
+                        break;
+                    }
+
+                    allPages.add(GBList);
+
+                    //}
+                    // });
+                    if(!check){
+                        check=true;
+                        break;
+                    }
+
+                    final int page = pagenum;
+                    final String finalPage = theFinalPageNum;
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+                            pdialog.setMessage("Loading. Please wait...\nNote, if your term was too broad this could take some time\n"+
+                                    " On page: " + page + " of " + finalPage);
+                        }
+                    });
+                }
+
+                //traveres the pages and add the objects to their respective lists.
+                for(int j = allPages.size()-1;j>=0;j--) {
+
+                    //if nothing was found
+                    if(allPages.size()==0){
+                        Toast.makeText(getApplicationContext(),
+                                "No Items found", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+
+                    //get the page
+                    List<listings> GBList = allPages.get(j);
+                    //get the gunbroker listings from that page
+                    for (int i = GBList.size() - 1; i >= 0; i--) {
+                        listings listing = GBList.get(i);
+                        arrayList.add(0, listing);
+                        americaListings.add(0, listing);
+
+                        //create a linked list of strings containing all the urls for duplicate comparison
+                        americaDuplicate.add(0,listing.getURL());
+                    }
+
+                    runOnUiThread(new Runnable() {
+
+                        public void run() {
+                            lv.invalidateViews();
+                        }
+                    });
+
+                }
+
+                runOnUiThread(new Runnable() {
+
+                    public void run() {
+                        if (arrayList.size() == 0) {
+                            Toast.makeText(getApplicationContext(),
+                                    "No Items found", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                });
+                handler.sendEmptyMessage(0);
+            }
+
+        };
+
+
+
+
+
+        pdialog = new ProgressDialog(SearchScreen.this); // this = YourActivity
+        pdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pdialog.setMessage("Loading. Please wait...\nIf your term was too broad this could take some time");
+        pdialog.setIndeterminate(true);
+        pdialog.setCanceledOnTouchOutside(false);
+        pdialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Stop Search", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                check=false;
+            }
+        });
+        pdialog.show();
+
+        t.start();
+
+        handler = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                pdialog.dismiss();
+            };
+        };
+
+
+
 
     }
 
-    public void CalgunsFinder(String searchTerm){
+    public void CalgunsFinder(){
         Toast.makeText(getApplicationContext(),
-                "Searching " + searchTerm + " on CalGuns", Toast.LENGTH_LONG).show();
+                "Searching " + theSearchTerm + " on CalGuns", Toast.LENGTH_LONG).show();
 
         allPages.clear();
 
@@ -1166,16 +1254,6 @@ public class SearchScreen extends AppCompatActivity {
             arrayList.add(replace.get(i)) ;
         }
     }
-    /*
-    //function to set the arraylist.
-    public void setGlobalArraylist(ArrayList<String> arraylist){
-        ((globals) this.getApplication()).setArrayList(arraylist);
-    }
-    //function to get the arraylist
-    public ArrayList<String> getGlobalArraylist(){
-        return ((globals) this.getApplication()).getArraylist();
-    }
-    */
 
     @Override
     public boolean onTouchEvent(MotionEvent event){

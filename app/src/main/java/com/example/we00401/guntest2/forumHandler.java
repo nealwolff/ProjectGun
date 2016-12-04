@@ -13,7 +13,6 @@ public class forumHandler extends website {
     String linkURL ="";
     List<String> HTMLfile;
 
-
     public forumHandler(String search, ArrayList<String> urls, String site, String cat,int pageNum) {
         if(site.equals("akfiles")) {
             URL = "http://www.akfiles.com/forums/forumdisplay.php?f=5&order=desc&page=" + pageNum;
