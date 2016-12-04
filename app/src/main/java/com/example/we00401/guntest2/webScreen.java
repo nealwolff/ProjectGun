@@ -31,7 +31,6 @@ public class webScreen extends AppCompatActivity {
 
 
         String url= getIntent().getStringExtra("url");
-        System.out.println(url);
         webview.loadUrl(url);
     }
     public boolean onTouchEvent(MotionEvent event){

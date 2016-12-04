@@ -17,7 +17,6 @@ public class gunsAmericaHandler extends website {
 
 
 
-            System.out.println("+Getting Page "+pageNum);
             URL = "https://www.gunsamerica.com/Search.htm?T="+modifiedSearch+"&ltid-all=1&og=1&as=365&ns=0&sort=ListingStartDate&=&pagenum="+pageNum;
             HTMLfile = getURL(URL);
 
@@ -92,10 +91,10 @@ public class gunsAmericaHandler extends website {
                     }
                 }
 
-                System.out.println("\nImgURL:\t"+output[0]);
-                System.out.println("Name:\t"+output[1]);
-                System.out.println("Price:\t"+output[2]);
-                System.out.println("URL:\t"+output[3]);
+               // System.out.println("\nImgURL:\t"+output[0]);
+               // System.out.println("Name:\t"+output[1]);
+               // System.out.println("Price:\t"+output[2]);
+               // System.out.println("URL:\t"+output[3]);
                 if(urls.contains(output[3])) {
                     kill = true;
                     return;

@@ -64,7 +64,6 @@ public class ArmsListHandler extends website {
                 }
                 scanner.close();
 
-                System.out.println(pageNum);
             }
 
             if (temp.contains("<div style=\"po")){
