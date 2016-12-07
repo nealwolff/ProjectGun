@@ -19,7 +19,8 @@ public class register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         final String pattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!?])(?=\\S+$).{8,}$";
-
+        final String epattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         final Button register = (Button) findViewById(R.id.btnRegisterC);
 
         //goes back to the login screen
@@ -41,7 +42,13 @@ public class register extends AppCompatActivity {
                     String pass1str = pass1.getText().toString();
                     String pass2str = pass2.getText().toString();
 
-                    if (!pass1str.equals(pass2str)) {
+                    if(!emailstr.matches(epattern)){
+                        Toast.makeText(register.this, "Enter a valid email", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(unamestr.contentEquals("")){
+                        Toast.makeText(register.this , "You must enter a username", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (!pass1str.equals(pass2str)) {
 
                         // pop up message
                         Toast.makeText(register.this, "Your password doesnt match", Toast.LENGTH_SHORT).show();
