@@ -43,7 +43,7 @@ public class MainScreen extends AppCompatActivity {
                 }
 
                 else {
-                    Toast.makeText(MainScreen.this, "Username and Password don't match.... f*cker", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainScreen.this, "Username and Password don't match", Toast.LENGTH_SHORT).show();
 
                 }
             }
