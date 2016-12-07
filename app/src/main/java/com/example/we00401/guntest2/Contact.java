@@ -8,7 +8,7 @@ package com.example.we00401.guntest2;
 
 public class Contact {
 //    int id;
-    String name, email, uname, pass;
+    String name, email, uname, pass, nameSave;
 
 //    public void setId(int id) {
 //        this.id=id;
@@ -49,4 +49,8 @@ public class Contact {
     public String getPass() {
         return this.pass;
     }
+
+    public void setNameSave() {this.nameSave = nameSave; }
+
+    public String getNameSave() {return this.nameSave; }
 }

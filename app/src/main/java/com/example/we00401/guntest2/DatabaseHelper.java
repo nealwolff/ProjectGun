@@ -14,16 +14,30 @@ import android.content.Context;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "contacts.db";
+
+    // contacts table
+    private static final String DATABASE_NAME = "guns.db";
     private static final String TABLE_NAME = "contacts";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_EMAIL = "email";
     private static final String COLUMN_UNAME = "uname";
     private static final String COLUMN_PASS = "pass";
+
+    // savaSearch table
+//    private static final String TABLE_NAME2 = "savesearch";
+//    private static final String COLUMN_NAMESAVE = "namesave";
+//    private static final String COLUMN_USER = "uname";
+
+
+
     SQLiteDatabase db;
+
     private static final String TABLE_CREATE = "create table contacts (id integer primary key not null , " +
             "name text not null , email text not null , uname text not null , pass text not null);";
+
+//    private static final String TABLE_CREATE2 = "create table savesearch (namesave primary key not null , " +
+//            "uname foreign key not null);";
 
 
     public DatabaseHelper(Context context) {
@@ -34,16 +48,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(TABLE_CREATE);
+//        db.execSQL(TABLE_CREATE2);
         this.db = db;
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String query = "DROP TABLE IF EXISTS " + TABLE_NAME;
+//        String query2 = "DROP TABLE IF EXISTS " + TABLE_NAME2;
         db.execSQL(query);
+//        db.execSQL(query2);
         this.onCreate(db);
     }
 
+    // insert values into the contact table
     public void insertContact(Contact c) {
 
         db = this.getWritableDatabase();
@@ -64,6 +82,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+//    // insert values into the contact table
+//    public void insertSaveSearch(Contact c) {
+//        db = this.getWritableDatabase();
+//        ContentValues values2 = new ContentValues();
+//
+//        String query = " SELECT * FROM savesearch";
+//        Cursor cursor = db.rawQuery(query, null);
+//        int count = cursor.getCount();
+//
+//        values2.put(COLUMN_NAMESAVE, c.getNameSave());
+//        values2.put(COLUMN_UNAME, c.getUname());
+//
+//        db.insert(TABLE_NAME2, null, values2);
+//        db.close();
+//    }
+
+
+
+
+
     public String searchPass(String uname) {
         db = this.getReadableDatabase();
         String query = "SELECT uname, pass FROM " + TABLE_NAME;
@@ -83,4 +121,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return b;
     }
+
+    public String checkUser(String uname) {
+        db = this.getReadableDatabase();
+        String query = "SELECT uname FROM " + TABLE_NAME;
+        Cursor cursor = db.rawQuery(query, null);
+        String a;
+        String b = "already exists";
+
+        if (cursor.moveToFirst()) {
+            do {
+                a = cursor.getString(0);
+
+                if (a.equals(uname)) {
+                    return b;
+                }
+            }
+            while(cursor.moveToNext());
+        }
+        return uname;
+    }
+
 }

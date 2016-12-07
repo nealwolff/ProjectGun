@@ -36,6 +36,7 @@ public class MainScreen extends AppCompatActivity {
 
                 String password = helper.searchPass(str);
 
+
                 if (pass.equals(password)) {
                     startActivity(new Intent(MainScreen.this, SearchScreen.class));
 //                    i.putExtra("Username", str);
