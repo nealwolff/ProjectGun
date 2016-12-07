@@ -52,7 +52,7 @@
         android:ems="10"
         android:layout_alignParentBottom="true"
         android:id="@+id/textSave2"
-        android:layout_alignStart="@+id/foundView"
+        android:layout_alignStart="@+id/foundView2"
         android:layout_toStartOf="@+id/btnSave2" />
 
     <Button
