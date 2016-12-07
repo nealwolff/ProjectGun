@@ -21,6 +21,7 @@
         android:textColor="@android:color/darker_gray"
         android:textColorHighlight="@android:color/black"
         android:textColorHint="@android:color/black"
+        android:id="@+id/thetextview"
         android:textAllCaps="true" />
 
     <TextView
@@ -28,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/logintext"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/thetextview"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="99dp"
         android:textColor="@android:color/holo_red_dark"
@@ -38,33 +39,6 @@
         android:textAllCaps="false"
         android:typeface="sans" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Enter Username"
-        android:ems="10"
-        android:id="@+id/textName"
-        android:layout_marginTop="70dp"
-        android:layout_below="@+id/logintext"
-        android:layout_centerHorizontal="true"
-        android:textAlignment="center"
-        android:singleLine="true"
-        android:selectAllOnFocus="true" />
-
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/textPassword"
-        android:text="kek"
-        android:textAlignment="center"
-        android:singleLine="true"
-        android:layout_centerVertical="true"
-        android:layout_alignEnd="@+id/logintext"
-        android:selectAllOnFocus="true" />
 
     <Button
         android:text="Sign In"
@@ -94,5 +68,33 @@
         android:textStyle="normal|bold"
         android:layout_below="@+id/btnSignIn"
         android:layout_alignStart="@+id/btnSignIn" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/textPassword"
+        android:text="kek"
+        android:textAlignment="center"
+        android:singleLine="true"
+        android:selectAllOnFocus="true"
+        android:layout_below="@+id/textName"
+        android:layout_alignEnd="@+id/logintext"
+        android:layout_marginTop="12dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Enter Username"
+        android:ems="10"
+        android:id="@+id/textName"
+        android:layout_marginTop="45dp"
+        android:textAlignment="center"
+        android:singleLine="true"
+        android:selectAllOnFocus="true"
+        android:layout_below="@+id/logintext"
+        android:layout_alignStart="@+id/textPassword" />
 
 </RelativeLayout>
