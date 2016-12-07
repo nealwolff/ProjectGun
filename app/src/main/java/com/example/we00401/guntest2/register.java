@@ -18,8 +18,9 @@ public class register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        final String pattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!?])(?=\\S+$).{8,}$";
 
-        Button register = (Button) findViewById(R.id.btnRegisterC);
+        final Button register = (Button) findViewById(R.id.btnRegisterC);
 
         //goes back to the login screen
         register.setOnClickListener(new View.OnClickListener() {
@@ -43,8 +44,10 @@ public class register extends AppCompatActivity {
                     if (!pass1str.equals(pass2str)) {
 
                         // pop up message
-                        Toast.makeText(register.this, "Your password doesnt match f*cker", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(register.this, "Your password doesnt match", Toast.LENGTH_SHORT).show();
 
+                    } else if(!pass1str.matches(pattern)){
+                        Toast.makeText(register.this, "Your password must be at least 8 characters and contain a number, symbol, upper and lower case", Toast.LENGTH_SHORT).show();
                     }
 
                     else {
