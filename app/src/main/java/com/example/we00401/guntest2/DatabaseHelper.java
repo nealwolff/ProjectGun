@@ -25,9 +25,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_PASS = "pass";
 
     // savaSearch table
-//    private static final String TABLE_NAME2 = "savesearch";
-//    private static final String COLUMN_NAMESAVE = "namesave";
-//    private static final String COLUMN_USER = "uname";
+    private static final String TABLE_NAME2 = "savesearch";
+    private static final String COLUMN_NAMESAVE = "namesave";
+    //private static final String COLUMN_USER = "uname";
+
+
+    // AKFiles
+    private static final String TABLE_NAME3 = "AKFiles";
+    private static final String COLUMN_URL = "url";
+    private static final String COLUMN_IMAGEURL = "imageurl";
+    private static final String COLUMN_PRICE = "price";
+    private static final String COLUMN_TITLE = "title";
+
 
 
 
@@ -36,8 +45,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_CREATE = "create table contacts (id integer primary key not null , " +
             "name text not null , email text not null , uname text not null , pass text not null);";
 
-//    private static final String TABLE_CREATE2 = "create table savesearch (namesave primary key not null , " +
-//            "uname foreign key not null);";
+    private static final String TABLE_CREATE2 = "create table savesearch (namesave text primary key not null , " +
+            "uname text foreign key not null);";
+
+    private static final String TABLE_CREATE3 = "create table akfiles (id integer primary key not null , " +
+            "url text not null , imageurl text not null, price text not null, title text not null);";
 
 
     public DatabaseHelper(Context context) {
@@ -48,16 +60,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(TABLE_CREATE);
-//        db.execSQL(TABLE_CREATE2);
+        db.execSQL(TABLE_CREATE2);
+        db.execSQL(TABLE_CREATE3);
         this.db = db;
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String query = "DROP TABLE IF EXISTS " + TABLE_NAME;
-//        String query2 = "DROP TABLE IF EXISTS " + TABLE_NAME2;
+        String query2 = "DROP TABLE IF EXISTS " + TABLE_NAME2;
+        String query3 = "DROP TABLE IF EXISTS " + TABLE_NAME3;
+
         db.execSQL(query);
-//        db.execSQL(query2);
+        db.execSQL(query2);
+        db.execSQL(query3);
+
         this.onCreate(db);
     }
 
@@ -98,10 +115,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        db.close();
 //    }
 
-
-
-
-
     public String searchPass(String uname) {
         db = this.getReadableDatabase();
         String query = "SELECT uname, pass FROM " + TABLE_NAME;
@@ -141,5 +154,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return uname;
     }
+
 
 }

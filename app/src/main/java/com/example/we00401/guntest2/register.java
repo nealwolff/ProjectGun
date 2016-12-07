@@ -62,7 +62,7 @@ public class register extends AppCompatActivity {
                     }
 
                     else if (!pass1str.matches(pattern)) {
-                        Toast.makeText(register.this, "Your password must be at least 8 characters and contain a number, symbol, upper and lower case", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(register.this, "Your password must be at least 8 characters and contain a number, symbol, upper and lower case", Toast.LENGTH_LONG).show();
                     }
 
                     else if(helper.checkUser(unamestr) == "already exists"){
