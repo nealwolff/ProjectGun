@@ -31,12 +31,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     // AKFiles
-    private static final String TABLE_NAME3 = "AKFiles";
+    private static final String TABLE_NAME3 = "akfiles";
     private static final String COLUMN_URL = "url";
     private static final String COLUMN_IMAGEURL = "imageurl";
     private static final String COLUMN_PRICE = "price";
     private static final String COLUMN_TITLE = "title";
 
+
+    // GunBroker
+    private static final String TABLE_NAME4 = "gunbroker";
+
+    // ArmsList
+    private static final String TABLE_NAME5 = "armslist";
+
+    // FALfiles
+    private static final String TABLE_NAME6 = "falfiles";
+
+    // GunsAmerica
+    private static final String TABLE_NAME7 = "gunsamerica";
+
+    // CalGuns
+    private static final String TABLE_NAME8 = "calguns";
 
 
 
@@ -50,7 +65,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TABLE_CREATE3 = "create table akfiles (id integer primary key AUTOINCREMENT, " +
             "url text not null , imageurl text not null, price text not null, title text not null, id2 integer not null,"
-    + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
+            + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
+
+//    private static final String TABLE_CREATE4 = "create table gunbroker (id integer primary key AUTOINCREMENT, " +
+//            "url text not null , imageurl text not null, price text not null, title text not null, id2 integer not null,"
+//            + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
+//
+//    private static final String TABLE_CREATE5 = "create table armslist (id integer primary key AUTOINCREMENT, " +
+//            "url text not null , imageurl text not null, price text not null, title text not null, id2 integer not null,"
+//            + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
+//
+//    private static final String TABLE_CREATE6 = "create table falfiles (id integer primary key AUTOINCREMENT, " +
+//            "url text not null , imageurl text not null, price text not null, title text not null, id2 integer not null,"
+//            + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
+//
+//    private static final String TABLE_CREATE7 = "create table gunsamerica (id integer primary key AUTOINCREMENT, " +
+//            "url text not null , imageurl text not null, price text not null, title text not null, id2 integer not null,"
+//            + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
+//
+//    private static final String TABLE_CREATE8 = "create table calguns (id integer primary key AUTOINCREMENT, " +
+//            "url text not null , imageurl text not null, price text not null, title text not null, id2 integer not null,"
+//            + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
 
 
     public DatabaseHelper(Context context) {
@@ -71,10 +106,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "DROP TABLE IF EXISTS " + TABLE_NAME;
         String query2 = "DROP TABLE IF EXISTS " + TABLE_NAME2;
         String query3 = "DROP TABLE IF EXISTS " + TABLE_NAME3;
+        String query4 = "DROP TABLE IF EXISTS " + TABLE_NAME4;
+        String query5 = "DROP TABLE IF EXISTS " + TABLE_NAME5;
+        String query6 = "DROP TABLE IF EXISTS " + TABLE_NAME6;
+        String query7 = "DROP TABLE IF EXISTS " + TABLE_NAME7;
+        String query8 = "DROP TABLE IF EXISTS " + TABLE_NAME8;
 
         db.execSQL(query);
         db.execSQL(query2);
         db.execSQL(query3);
+//        db.execSQL(query4);
+//        db.execSQL(query5);
+//        db.execSQL(query6);
+//        db.execSQL(query7);
+//        db.execSQL(query8);
 
         this.onCreate(db);
     }
