@@ -19,7 +19,7 @@ public class register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        final String pattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!?])(?=\\S+$).{8,}$";
+        final String pattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!?_-])(?=\\S+$).{6,}$";
 
         final String epattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -62,7 +62,7 @@ public class register extends AppCompatActivity {
                     }
 
                     else if (!pass1str.matches(pattern)) {
-                        Toast.makeText(register.this, "Your password must be at least 8 characters and contain a number, symbol, upper and lower case", Toast.LENGTH_LONG).show();
+                        Toast.makeText(register.this, "Your password must be at least 6 characters and contain a number, symbol, upper and lower case", Toast.LENGTH_LONG).show();
                     }
 
                     else if(helper.checkUser(unamestr) == "already exists"){
