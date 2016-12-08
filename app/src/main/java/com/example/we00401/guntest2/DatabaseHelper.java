@@ -42,7 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     SQLiteDatabase db;
 
-    private static final String TABLE_CREATE = "create table contacts (uname text primary key not null, " +
+    private static final String TABLE_CREATE = "create table contacts (id integer primary key AUTOINCREMENT, uname text not null, " +
             "name text not null , email text not null , pass text not null);";
 
     private static final String TABLE_CREATE2 = "create table savesearch (id integer primary key AUTOINCREMENT, namesave text not null, "
