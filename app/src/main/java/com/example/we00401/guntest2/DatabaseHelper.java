@@ -196,7 +196,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void insertGunbroker(String url,String image, String price, String name){
+    public void insertSite(String url,String image, String price, String name, String site){
         String ID = "SELECT MAX(ID) AS \"HIGHEST\"\n" +
             "FROM savesearch;";
         String ID2;
@@ -206,7 +206,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             ID2 = cursor.getString(0);
             System.out.println(ID2);
 
-            String insterQuery = "INSERT INTO gunbroker (url, imageurl, price, title, id2)"+
+            String insterQuery = "INSERT INTO "+site+" (url, imageurl, price, title, id2)"+
                     "VALUES ('"+url+"', '"+image+"', '" +price+"','" +name+ "','"+ID2+"');";
 
             db.execSQL(insterQuery);
@@ -242,7 +242,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return sTerm;
     }
-    public ArrayList<listings> getGunbroker(String uname, String saveName){
+    public ArrayList<listings> getGunbroker(String uname, String saveName, String site){
         ArrayList<listings> ret = new ArrayList<listings>();
         db = this.getReadableDatabase();
         String ID = "SELECT ID FROM savesearch WHERE savesearch.uname LIKE '" + uname + "' AND savesearch.namesave LIKE '"+saveName+"';";
@@ -252,7 +252,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             String ID2 = cursor.getString(0);
             System.out.println("ID2: " + ID2);
 
-            String query = "SELECT * FROM gunbroker WHERE gunbroker.ID2 = " + ID2 +";";
+            String query = "SELECT * FROM "+site+" WHERE "+site+".ID2 = " + ID2 +";";
             Cursor cursor2 = db.rawQuery(query, null);
             System.out.println("count:" +cursor2.getCount());
             if (cursor2.moveToFirst()) {

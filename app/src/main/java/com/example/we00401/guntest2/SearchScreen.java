@@ -454,8 +454,15 @@ public class SearchScreen extends AppCompatActivity {
         theSearchTerm = seachCat[0];
         cattegory = seachCat[1];
         System.out.println("search Term: " + theSearchTerm +"\ncategory: " + cattegory);
-        ArrayList<listings> kek = helper.getGunbroker(username, saveName);
+        ArrayList<listings> kek = helper.getGunbroker(username, saveName,"gunbroker");
+        ArrayList<listings> kek2 = helper.getGunbroker(username, saveName,"armslist");
+        for(int i = 0; kek.size()<i;i++)
+            gunDupilcate.add(kek.get(i).getURL());
+        for(int i = 0; kek2.size()<i;i++)
+            armsDuplicate.add(kek2.get(i).getURL());
+        armsListings = kek2;
         gunListings = kek;
+
         setArraylist(kek);
     }
 
@@ -473,7 +480,11 @@ public class SearchScreen extends AppCompatActivity {
                 if(gunListings!= null) {
                     for (int i = 0; i < gunListings.size(); i++) {
                         listings tempElement = gunListings.get(i);
-                        helper.insertGunbroker(tempElement.getURL(),tempElement.getImage(),tempElement.getPrice(),tempElement.getName());
+                        listings tempElement2 = armsListings.get(i);
+                        //listings tempElement3 = akListings.get(i);
+                        helper.insertSite(tempElement.getURL(),tempElement.getImage(),tempElement.getPrice(),tempElement.getName(),"gunbroker");
+                        helper.insertSite(tempElement2.getURL(),tempElement2.getImage(),tempElement2.getPrice(),tempElement2.getName(),"armslist");
+                        //helper.insertSite(tempElement3.getURL(),tempElement3.getImage(),tempElement3.getPrice(),tempElement3.getName(),"akfiles");
                     }
                 }
                 handler.sendEmptyMessage(0);
