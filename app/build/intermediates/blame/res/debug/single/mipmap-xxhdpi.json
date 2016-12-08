@@ -1,9 +1,5 @@
 [
     {
-        "merged": "/Users/Joshua/Documents/ProjectGun/C:\\Users\\nw00747\\StudioProjects\\ProjectGun\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_launcher.png",
-        "source": "/Users/Joshua/Documents/ProjectGun/C:\\Users\\nw00747\\StudioProjects\\ProjectGun\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
-    },
-    {
         "merged": "/Users/Joshua/Documents/ProjectGun/app/build/intermediates/res/merged/debug/mipmap-xxhdpi/ic_launcher.png",
         "source": "/Users/Joshua/Documents/ProjectGun/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
     }

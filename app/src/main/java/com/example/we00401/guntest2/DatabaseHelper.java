@@ -42,14 +42,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     SQLiteDatabase db;
 
-    private static final String TABLE_CREATE = "create table contacts (id integer primary key not null , " +
-            "name text not null , email text not null , uname text not null , pass text not null);";
+    private static final String TABLE_CREATE = "create table contacts (uname text primary key not null, " +
+            "name text not null , email text not null , pass text not null);";
 
-    private static final String TABLE_CREATE2 = "create table savesearch (namesave text primary key not null , " +
-            "uname text foreign key not null);";
+    private static final String TABLE_CREATE2 = "create table savesearch (id integer primary key AUTOINCREMENT, namesave text not null, "
+            + "uname text not null, FOREIGN KEY (uname) REFERENCES contacts (uname));";
 
-    private static final String TABLE_CREATE3 = "create table akfiles (id integer primary key not null , " +
-            "url text not null , imageurl text not null, price text not null, title text not null);";
+    private static final String TABLE_CREATE3 = "create table akfiles (id integer primary key AUTOINCREMENT, " +
+            "url text not null , imageurl text not null, price text not null, title text not null, id2 integer not null,"
+    + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
 
 
     public DatabaseHelper(Context context) {

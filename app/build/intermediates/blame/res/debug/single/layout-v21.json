@@ -1,9 +1,5 @@
 [
     {
-        "merged": "/Users/Joshua/Documents/ProjectGun/C:\\Users\\nw00747\\StudioProjects\\ProjectGun\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action.xml",
-        "source": "/Users/Joshua/Documents/ProjectGun/C:\\Users\\nw00747\\StudioProjects\\ProjectGun\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout-v21\\notification_action.xml"
-    },
-    {
         "merged": "/Users/Joshua/Documents/ProjectGun/app/build/intermediates/res/merged/debug/layout-v21/notification_action_tombstone.xml",
         "source": "/Users/Joshua/Documents/ProjectGun/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/layout-v21/notification_action_tombstone.xml"
     },
@@ -12,20 +8,8 @@
         "source": "/Users/Joshua/Documents/ProjectGun/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/layout-v21/notification_template_icon_group.xml"
     },
     {
-        "merged": "/Users/Joshua/Documents/ProjectGun/C:\\Users\\nw00747\\StudioProjects\\ProjectGun\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_custom_big.xml",
-        "source": "/Users/Joshua/Documents/ProjectGun/C:\\Users\\nw00747\\StudioProjects\\ProjectGun\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout-v21\\notification_template_custom_big.xml"
-    },
-    {
         "merged": "/Users/Joshua/Documents/ProjectGun/app/build/intermediates/res/merged/debug/layout-v21/notification_action.xml",
         "source": "/Users/Joshua/Documents/ProjectGun/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/layout-v21/notification_action.xml"
-    },
-    {
-        "merged": "/Users/Joshua/Documents/ProjectGun/C:\\Users\\nw00747\\StudioProjects\\ProjectGun\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_icon_group.xml",
-        "source": "/Users/Joshua/Documents/ProjectGun/C:\\Users\\nw00747\\StudioProjects\\ProjectGun\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout-v21\\notification_template_icon_group.xml"
-    },
-    {
-        "merged": "/Users/Joshua/Documents/ProjectGun/C:\\Users\\nw00747\\StudioProjects\\ProjectGun\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action_tombstone.xml",
-        "source": "/Users/Joshua/Documents/ProjectGun/C:\\Users\\nw00747\\StudioProjects\\ProjectGun\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout-v21\\notification_action_tombstone.xml"
     },
     {
         "merged": "/Users/Joshua/Documents/ProjectGun/app/build/intermediates/res/merged/debug/layout-v21/notification_template_custom_big.xml",
