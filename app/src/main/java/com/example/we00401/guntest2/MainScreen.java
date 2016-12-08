@@ -66,26 +66,6 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
-        //clears the name feild when clicked
-        final EditText textName = (EditText)findViewById(R.id.textName);
-        textName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textName.setText("");
-            }
-        });
-
-
-        //clears the password feild when focused
-        final EditText textPassword = (EditText)findViewById(R.id.textPassword);
-        textPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {textPassword.setText("");}
-        });
-
-
-
-
     }
 
 }

@@ -18,21 +18,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import android.os.Handler;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 public class SearchScreen extends AppCompatActivity {
     String username;
@@ -449,19 +439,38 @@ public class SearchScreen extends AppCompatActivity {
         });
     }
 
+    //loads the saved listings into the listigns and display.
     private void loadData(String saveName) {
         String [] seachCat = helper.getSearchTerm(username, saveName);
         theSearchTerm = seachCat[0];
         cattegory = seachCat[1];
         System.out.println("search Term: " + theSearchTerm +"\ncategory: " + cattegory);
-        ArrayList<listings> kek = helper.getGunbroker(username, saveName,"gunbroker");
-        ArrayList<listings> kek2 = helper.getGunbroker(username, saveName,"armslist");
+        ArrayList<listings> kek = helper.getSite(username, saveName,"gunbroker");
+        ArrayList<listings> kek2 = helper.getSite(username, saveName,"armslist");
+        ArrayList<listings> kek3 = helper.getSite(username, saveName,"akfiles");
+        ArrayList<listings> kek4 = helper.getSite(username, saveName,"falfiles");
+        ArrayList<listings> kek5 = helper.getSite(username, saveName,"gunsamerica");
+        ArrayList<listings> kek6 = helper.getSite(username, saveName,"calguns");
+
         for(int i = 0; kek.size()<i;i++)
             gunDupilcate.add(kek.get(i).getURL());
         for(int i = 0; kek2.size()<i;i++)
             armsDuplicate.add(kek2.get(i).getURL());
+        for(int i = 0; kek3.size()<i;i++)
+            akDuplicate.add(kek3.get(i).getURL());
+        for(int i = 0; kek4.size()<i;i++)
+            falDupilcate.add(kek4.get(i).getURL());
+        for(int i = 0; kek5.size()<i;i++)
+            americaDuplicate.add(kek5.get(i).getURL());
+        for(int i = 0; kek6.size()<i;i++)
+            calDuplicate.add(kek6.get(i).getURL());
+
         armsListings = kek2;
         gunListings = kek;
+        akListings = kek3;
+        falListings = kek4;
+        americaListings = kek5;
+        calListings = kek6;
 
         setArraylist(kek);
     }
@@ -480,11 +489,32 @@ public class SearchScreen extends AppCompatActivity {
                 if(gunListings!= null) {
                     for (int i = 0; i < gunListings.size(); i++) {
                         listings tempElement = gunListings.get(i);
-                        listings tempElement2 = armsListings.get(i);
-                        //listings tempElement3 = akListings.get(i);
                         helper.insertSite(tempElement.getURL(),tempElement.getImage(),tempElement.getPrice(),tempElement.getName(),"gunbroker");
-                        helper.insertSite(tempElement2.getURL(),tempElement2.getImage(),tempElement2.getPrice(),tempElement2.getName(),"armslist");
-                        //helper.insertSite(tempElement3.getURL(),tempElement3.getImage(),tempElement3.getPrice(),tempElement3.getName(),"akfiles");
+
+                    }
+                    for (int i = 0; i < armsListings.size(); i++) {
+                        listings tempElement = armsListings.get(i);
+                        helper.insertSite(tempElement.getURL(),tempElement.getImage(),tempElement.getPrice(),tempElement.getName(),"armslist");
+
+                    }
+                    for (int i = 0; i < akListings.size(); i++) {
+                        listings tempElement = akListings.get(i);
+                        helper.insertSite(tempElement.getURL(),tempElement.getImage(),tempElement.getPrice(),tempElement.getName(),"akfiles");
+
+                    }
+                    for (int i = 0; i < falListings.size(); i++) {
+                        listings tempElement = falListings.get(i);
+                        helper.insertSite(tempElement.getURL(),tempElement.getImage(),tempElement.getPrice(),tempElement.getName(),"falfiles");
+
+                    }
+                    for (int i = 0; i < americaListings.size(); i++) {
+                        listings tempElement = americaListings.get(i);
+                        helper.insertSite(tempElement.getURL(),tempElement.getImage(),tempElement.getPrice(),tempElement.getName(),"gunsamerica");
+
+                    }
+                    for (int i = 0; i < calListings.size(); i++) {
+                        listings tempElement = calListings.get(i);
+                        helper.insertSite(tempElement.getURL(),tempElement.getImage(),tempElement.getPrice(),tempElement.getName(),"calguns");
                     }
                 }
                 handler.sendEmptyMessage(0);
@@ -511,16 +541,6 @@ public class SearchScreen extends AppCompatActivity {
             };
         };
 
-//        try {
-//                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(this.openFileOutput(name, Context.MODE_PRIVATE));
-//                outputStreamWriter.write(data);
-//                outputStreamWriter.close();
-//        }catch (IOException e) {
-//            AlertDialog alertDialog = new AlertDialog.Builder(SearchScreen.this).create();
-//            alertDialog.setTitle("Error");
-//            alertDialog.setMessage("cannot save file");
-//            alertDialog.show();
-//        }
     }
 
     private void clearEverything() {

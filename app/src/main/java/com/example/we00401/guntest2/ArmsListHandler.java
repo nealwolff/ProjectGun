@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ArmsListHandler extends website {
-    String pageNum;
+    String pageNum ="";
     String globalSearchString = "";
     //	int pages = 0;
     String URL = "";

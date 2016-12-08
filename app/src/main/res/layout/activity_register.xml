@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:hint="Name"
     tools:context="com.example.we00401.guntest2.register">
 
     <TextView
@@ -26,13 +27,13 @@
         android:layout_below="@+id/editText2"
         android:layout_alignEnd="@+id/editText2"
         android:id="@+id/editText5"
-        android:text="email@domaim.com" />
+        android:hint="email@domain.com" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="username"
+        android:hint="username"
         android:ems="10"
         android:layout_below="@+id/editText5"
         android:layout_alignEnd="@+id/editText5"
@@ -42,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:hint="Name"
         android:ems="10"
         android:layout_marginTop="169dp"
         android:id="@+id/editText2"
@@ -63,7 +64,7 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/editText7"
-        android:text="Lolol1!"
+        android:hint="password"
         android:layout_below="@+id/editText6"
         android:layout_alignStart="@+id/editText6" />
 
@@ -73,7 +74,7 @@
         android:inputType="textPassword"
         android:ems="10"
         android:id="@+id/editText8"
-        android:text="Lolol1!"
+        android:hint="password"
         android:layout_below="@+id/editText7"
         android:layout_alignStart="@+id/editText7" />
 </RelativeLayout>
