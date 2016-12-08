@@ -6,6 +6,7 @@ package com.example.we00401.guntest2;
  * Created by Joshua on 12/1/16.
  */
 
+import android.app.ExpandableListActivity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -216,6 +217,64 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
+    }
+    public String [] getSearchTerm(String uname, String saveName){
+        String[] sTerm = new String[2];
+        db = this.getReadableDatabase();
+        String cat = "SELECT category FROM savesearch WHERE savesearch.uname LIKE '" + uname + "' AND savesearch.namesave LIKE '"+saveName+"';";
+        String st = "SELECT searchterm FROM savesearch WHERE savesearch.uname LIKE '" + uname + "' AND savesearch.namesave LIKE '"+saveName+"';";
+        try {
+            Cursor cursor = db.rawQuery(cat, null);
+            cursor.moveToFirst();
+            sTerm[1] = cursor.getString(0);
+            System.out.println("WEW: " + sTerm[1]);
+
+            cursor = db.rawQuery(st, null);
+            cursor.moveToFirst();
+            sTerm[0] = cursor.getString(0);
+            System.out.println("WEW LADS: " + sTerm[0]);
+
+
+        }catch (Exception e){
+            System.out.println("FUCKING FAILED WHY FIX THIS YOU DUMBASS");
+            System.out.println(e);
+        }
+
+        return sTerm;
+    }
+    public ArrayList<listings> getGunbroker(String uname, String saveName){
+        ArrayList<listings> ret = new ArrayList<listings>();
+        db = this.getReadableDatabase();
+        String ID = "SELECT ID FROM savesearch WHERE savesearch.uname LIKE '" + uname + "' AND savesearch.namesave LIKE '"+saveName+"';";
+        try{
+            Cursor cursor = db.rawQuery(ID,null);
+            cursor.moveToFirst();
+            String ID2 = cursor.getString(0);
+            System.out.println("ID2: " + ID2);
+
+            String query = "SELECT * FROM gunbroker WHERE gunbroker.ID2 = " + ID2 +";";
+            Cursor cursor2 = db.rawQuery(query, null);
+            System.out.println("count:" +cursor2.getCount());
+            if (cursor2.moveToFirst()) {
+                do {
+                    String name = cursor2.getString(cursor2.getColumnIndex("title"));
+                    String url = cursor2.getString(cursor2.getColumnIndex("url"));;
+                    String image = cursor2.getString(cursor2.getColumnIndex("imageurl"));;
+                    String price = cursor2.getString(cursor2.getColumnIndex("price"));;
+                    //System.out.println("name: " + name +"\nurl: " + url + "\nimage: " +image +"\nprice: " +price);
+                    listings listing = new listings(image,name,price,url);
+
+
+                    ret.add(listing);
+                }
+                while(cursor2.moveToNext());
+            }
+
+
+        }catch (Exception e){
+            System.out.println("FUCKING FAILED WHY FIX THIS YOU DUMBASS");
+        }
+        return ret;
     }
 
     public ArrayList<String> getDatabase(String dataName, String uname){

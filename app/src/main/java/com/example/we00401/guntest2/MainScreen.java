@@ -40,9 +40,9 @@ public class MainScreen extends AppCompatActivity {
                 if (pass.equals(password)) {
                     Intent intent = new Intent(MainScreen.this, SearchScreen.class);
                     intent.putExtra("username", str);
+                    intent.putExtra("name", "!!FIRSTSTART!!");
                     startActivity(intent);
-//                    i.putExtra("Username", str);
-                    //finish();
+                    finish();
                 }
 
                 else {
@@ -78,24 +78,13 @@ public class MainScreen extends AppCompatActivity {
 
         //clears the password feild when focused
         final EditText textPassword = (EditText)findViewById(R.id.textPassword);
-        textPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        textPassword.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View view, boolean b) {textPassword.setText("");}
+            public void onClick(View v) {textPassword.setText("");}
         });
 
 
 
-
-    }
-
-
-
-
-    public void signIn(String username, String password){
-
-    }
-
-    public void register(){
 
     }
 

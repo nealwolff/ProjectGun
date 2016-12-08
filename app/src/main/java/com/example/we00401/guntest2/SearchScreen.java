@@ -91,7 +91,9 @@ public class SearchScreen extends AppCompatActivity {
         lv = (ListView) findViewById(R.id.foundView2);
 
         username = getIntent().getStringExtra("username");
-
+        String saveName = getIntent().getStringExtra("name");
+        if (!saveName.equals("!!FIRSTSTART!!"))
+                loadData(saveName);
 
         runOnUiThread(new Runnable() {
             @Override
@@ -447,6 +449,16 @@ public class SearchScreen extends AppCompatActivity {
         });
     }
 
+    private void loadData(String saveName) {
+        String [] seachCat = helper.getSearchTerm(username, saveName);
+        theSearchTerm = seachCat[0];
+        cattegory = seachCat[1];
+        System.out.println("search Term: " + theSearchTerm +"\ncategory: " + cattegory);
+        ArrayList<listings> kek = helper.getGunbroker(username, saveName);
+        gunListings = kek;
+        setArraylist(kek);
+    }
+
     public void Savefile(String name){
         boolean kek = helper.createSave(name,username, cattegory,theSearchTerm);
         if(!kek) {
@@ -456,15 +468,37 @@ public class SearchScreen extends AppCompatActivity {
             alertDialog.show();
             return;
         }
-        if(gunListings!= null) {
-            for (int i = 0; i < gunListings.size(); i++) {
-                listings tempElement = gunListings.get(i);
-                helper.insertGunbroker(tempElement.getURL(),tempElement.getImage(),tempElement.getPrice(),tempElement.getName());
-
-//                data += "\nname:" + tempElement.getName() + "\n" + "url:" + tempElement.getURL()
-//                        + "\n" + "image:" + tempElement.getImage() + "\n" + "Price:" + tempElement.getPrice() + "\n";
+        final Thread t = new Thread() {
+            public void run() {
+                if(gunListings!= null) {
+                    for (int i = 0; i < gunListings.size(); i++) {
+                        listings tempElement = gunListings.get(i);
+                        helper.insertGunbroker(tempElement.getURL(),tempElement.getImage(),tempElement.getPrice(),tempElement.getName());
+                    }
+                }
+                handler.sendEmptyMessage(0);
             }
-        }
+
+        };
+
+
+
+
+
+        pdialog = new ProgressDialog(SearchScreen.this); // this = YourActivity
+        pdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pdialog.setMessage("Saving, please wait...");
+        pdialog.setIndeterminate(true);
+        pdialog.setCanceledOnTouchOutside(false);
+        pdialog.show();
+
+        t.start();
+
+        handler = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                pdialog.dismiss();
+            };
+        };
 
 //        try {
 //                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(this.openFileOutput(name, Context.MODE_PRIVATE));
@@ -476,43 +510,6 @@ public class SearchScreen extends AppCompatActivity {
 //            alertDialog.setMessage("cannot save file");
 //            alertDialog.show();
 //        }
-    }
-
-    private String OpenFile(String filename) {
-
-        String ret = "";
-
-        try {
-            InputStream inputStream = this.openFileInput(filename);
-
-            if ( inputStream != null ) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    stringBuilder.append(receiveString);
-                    stringBuilder.append("\n");
-                }
-
-                inputStream.close();
-                ret = stringBuilder.toString();
-            }
-        }
-        catch (FileNotFoundException e) {
-            AlertDialog alertDialog = new AlertDialog.Builder(SearchScreen.this).create();
-            alertDialog.setTitle("Error");
-            alertDialog.setMessage(e.toString());
-            alertDialog.show();
-        } catch (IOException e) {
-            AlertDialog alertDialog = new AlertDialog.Builder(SearchScreen.this).create();
-            alertDialog.setTitle("Error");
-            alertDialog.setMessage(e.toString());
-            alertDialog.show();
-        }
-
-        return ret;
     }
 
     private void clearEverything() {
