@@ -12,7 +12,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class SavedSearch extends AppCompatActivity {
-
+    DatabaseHelper helper = new DatabaseHelper(this);
     ListView lv;
     ArrayList<String> files;
     @Override
@@ -23,11 +23,11 @@ public class SavedSearch extends AppCompatActivity {
         File theFiles = this.getFilesDir();
         File [] FilesArray = theFiles.listFiles();
 
+        String username = getIntent().getStringExtra("username");
 
-
-
-        files =  new ArrayList<>();
         lv = (ListView) findViewById(R.id.savedView);
+
+        files =  helper.getDatabase("",username);
 
         runOnUiThread(new Runnable() {
             @Override
@@ -43,8 +43,9 @@ public class SavedSearch extends AppCompatActivity {
                 android.R.layout.simple_list_item_multiple_choice,
                 files);
         lv.setAdapter(adapter);
-        for(int i=0;i<FilesArray.length;i++)
-            files.add(FilesArray[i].toString().replaceAll(this.getFilesDir().toString()+"/",""));
+//        for(int i=0;i<FilesArray.length;i++)
+//            files.add(FilesArray[i].toString().replaceAll(this.getFilesDir().toString()+"/",""));
+
 
         Button btn1 = (Button)findViewById(R.id.btnLoad);
 

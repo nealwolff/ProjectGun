@@ -164,7 +164,9 @@ public class SearchScreen extends AppCompatActivity {
 
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(SearchScreen.this, SavedSearch.class));
+                Intent intent = new Intent(SearchScreen.this, SavedSearch.class);
+                intent.putExtra("username",username);
+                startActivity(intent);
             }
         });
 
@@ -446,28 +448,34 @@ public class SearchScreen extends AppCompatActivity {
     }
 
     public void Savefile(String name){
-
-        String data = "gunListings";
+        boolean kek = helper.createSave(name,username, cattegory,theSearchTerm);
+        if(!kek) {
+            AlertDialog alertDialog = new AlertDialog.Builder(SearchScreen.this).create();
+            alertDialog.setTitle("Error");
+            alertDialog.setMessage("Save already exists");
+            alertDialog.show();
+            return;
+        }
         if(gunListings!= null) {
             for (int i = 0; i < gunListings.size(); i++) {
                 listings tempElement = gunListings.get(i);
-                data += "\nname:" + tempElement.getName() + "\n" + "url:" + tempElement.getURL()
-                        + "\n" + "image:" + tempElement.getImage() + "\n" + "Price:" + tempElement.getPrice() + "\n";
+                helper.insertGunbroker(tempElement.getURL(),tempElement.getImage(),tempElement.getPrice(),tempElement.getName());
+
+//                data += "\nname:" + tempElement.getName() + "\n" + "url:" + tempElement.getURL()
+//                        + "\n" + "image:" + tempElement.getImage() + "\n" + "Price:" + tempElement.getPrice() + "\n";
             }
         }
-        else
-            data+=":null\n";
 
-        try {
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(this.openFileOutput(name, Context.MODE_PRIVATE));
-                outputStreamWriter.write(data);
-                outputStreamWriter.close();
-        }catch (IOException e) {
-            AlertDialog alertDialog = new AlertDialog.Builder(SearchScreen.this).create();
-            alertDialog.setTitle("Error");
-            alertDialog.setMessage("cannot save file");
-            alertDialog.show();
-        }
+//        try {
+//                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(this.openFileOutput(name, Context.MODE_PRIVATE));
+//                outputStreamWriter.write(data);
+//                outputStreamWriter.close();
+//        }catch (IOException e) {
+//            AlertDialog alertDialog = new AlertDialog.Builder(SearchScreen.this).create();
+//            alertDialog.setTitle("Error");
+//            alertDialog.setMessage("cannot save file");
+//            alertDialog.show();
+//        }
     }
 
     private String OpenFile(String filename) {

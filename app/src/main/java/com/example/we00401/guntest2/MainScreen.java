@@ -39,7 +39,7 @@ public class MainScreen extends AppCompatActivity {
 
                 if (pass.equals(password)) {
                     Intent intent = new Intent(MainScreen.this, SearchScreen.class);
-                    intent.putExtra("username", a.getText());
+                    intent.putExtra("username", str);
                     startActivity(intent);
 //                    i.putExtra("Username", str);
                     //finish();

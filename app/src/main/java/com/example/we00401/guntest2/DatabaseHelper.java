@@ -11,6 +11,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
+import android.provider.Settings;
+
+import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
@@ -61,31 +64,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "name text not null , email text not null , pass text not null);";
 
     private static final String TABLE_CREATE2 = "create table savesearch (id integer primary key AUTOINCREMENT, namesave text not null, "
-            + "uname text not null, FOREIGN KEY (uname) REFERENCES contacts (uname));";
+            + "category text not null, searchterm text not null, uname text not null, FOREIGN KEY (uname) REFERENCES contacts (uname));";
 
     private static final String TABLE_CREATE3 = "create table akfiles (id integer primary key AUTOINCREMENT, " +
             "url text not null , imageurl text not null, price text not null, title text not null, id2 integer not null,"
             + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
 
-//    private static final String TABLE_CREATE4 = "create table gunbroker (id integer primary key AUTOINCREMENT, " +
-//            "url text not null , imageurl text not null, price text not null, title text not null, id2 integer not null,"
-//            + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
-//
-//    private static final String TABLE_CREATE5 = "create table armslist (id integer primary key AUTOINCREMENT, " +
-//            "url text not null , imageurl text not null, price text not null, title text not null, id2 integer not null,"
-//            + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
-//
-//    private static final String TABLE_CREATE6 = "create table falfiles (id integer primary key AUTOINCREMENT, " +
-//            "url text not null , imageurl text not null, price text not null, title text not null, id2 integer not null,"
-//            + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
-//
-//    private static final String TABLE_CREATE7 = "create table gunsamerica (id integer primary key AUTOINCREMENT, " +
-//            "url text not null , imageurl text not null, price text not null, title text not null, id2 integer not null,"
-//            + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
-//
-//    private static final String TABLE_CREATE8 = "create table calguns (id integer primary key AUTOINCREMENT, " +
-//            "url text not null , imageurl text not null, price text not null, title text not null, id2 integer not null,"
-//            + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
+    private static final String TABLE_CREATE4 = "create table gunbroker (id integer primary key AUTOINCREMENT, " +
+            "url text not null , imageurl text not null, price text not null, title text not null, id2 integer not null,"
+            + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
+
+    private static final String TABLE_CREATE5 = "create table armslist (id integer primary key AUTOINCREMENT, " +
+            "url text not null , imageurl text not null, price text not null, title text not null, id2 integer not null,"
+            + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
+
+    private static final String TABLE_CREATE6 = "create table falfiles (id integer primary key AUTOINCREMENT, " +
+            "url text not null , imageurl text not null, price text not null, title text not null, id2 integer not null,"
+            + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
+
+    private static final String TABLE_CREATE7 = "create table gunsamerica (id integer primary key AUTOINCREMENT, " +
+            "url text not null , imageurl text not null, price text not null, title text not null, id2 integer not null,"
+            + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
+
+    private static final String TABLE_CREATE8 = "create table calguns (id integer primary key AUTOINCREMENT, " +
+            "url text not null , imageurl text not null, price text not null, title text not null, id2 integer not null,"
+            + " FOREIGN KEY (id2) REFERENCES savesearch (id));";
 
 
     public DatabaseHelper(Context context) {
@@ -98,6 +101,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(TABLE_CREATE);
         db.execSQL(TABLE_CREATE2);
         db.execSQL(TABLE_CREATE3);
+        db.execSQL(TABLE_CREATE4);
+        db.execSQL(TABLE_CREATE5);
+        db.execSQL(TABLE_CREATE6);
+        db.execSQL(TABLE_CREATE7);
+        db.execSQL(TABLE_CREATE8);
         this.db = db;
     }
 
@@ -115,11 +123,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(query);
         db.execSQL(query2);
         db.execSQL(query3);
-//        db.execSQL(query4);
-//        db.execSQL(query5);
-//        db.execSQL(query6);
-//        db.execSQL(query7);
-//        db.execSQL(query8);
+        db.execSQL(query4);
+        db.execSQL(query5);
+        db.execSQL(query6);
+        db.execSQL(query7);
+        db.execSQL(query8);
 
         this.onCreate(db);
     }
@@ -145,21 +153,87 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-//    // insert values into the contact table
-//    public void insertSaveSearch(Contact c) {
-//        db = this.getWritableDatabase();
-//        ContentValues values2 = new ContentValues();
-//
-//        String query = " SELECT * FROM savesearch";
-//        Cursor cursor = db.rawQuery(query, null);
-//        int count = cursor.getCount();
-//
-//        values2.put(COLUMN_NAMESAVE, c.getNameSave());
-//        values2.put(COLUMN_UNAME, c.getUname());
-//
-//        db.insert(TABLE_NAME2, null, values2);
-//        db.close();
-//    }
+    // insert values into the contact table
+ /*   public void insertSaveSearch(Contact c) {
+       db = this.getWritableDatabase();
+       ContentValues values2 = new ContentValues();
+
+        String query = " SELECT * FROM savesearch";
+        Cursor cursor = db.rawQuery(query, null);
+        int count = cursor.getCount();
+
+       values2.put(COLUMN_NAMESAVE, c.getNameSave());
+        values2.put(COLUMN_UNAME, c.getUname());
+
+        db.insert(TABLE_NAME2, null, values2);
+        db.close();    }*/
+
+    public boolean createSave(String namesave, String uname, String category, String searchterm){
+        db = this.getWritableDatabase();
+        String query = "SELECT namesave FROM savesearch WHERE savesearch.uname LIKE '" + uname + "';";
+        Cursor cursor = db.rawQuery(query, null);
+        System.out.println(cursor.getCount());
+        //System.out.println(cursor.moveToFirst());
+        if (cursor.moveToFirst()) {
+            do {
+                String name = cursor.getString(0);
+                if(name.equals(namesave)){
+                    return false;
+                }
+            }
+            while(cursor.moveToNext());
+        }
+
+
+        try {
+            String insterQuery = "INSERT INTO savesearch ('namesave', 'uname', 'category', 'searchterm') " +
+                    "VALUES ('" + namesave + "', '" + uname + "', '" + category + "', '" + searchterm + "');";
+            db.execSQL(insterQuery);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public void insertGunbroker(String url,String image, String price, String name){
+        String ID = "SELECT MAX(ID) AS \"HIGHEST\"\n" +
+            "FROM savesearch;";
+        String ID2;
+        try{
+            Cursor cursor = db.rawQuery(ID,null);
+            cursor.moveToFirst();
+            ID2 = cursor.getString(0);
+            System.out.println(ID2);
+
+            String insterQuery = "INSERT INTO gunbroker (url, imageurl, price, title, id2)"+
+                    "VALUES ('"+url+"', '"+image+"', '" +price+"','" +name+ "','"+ID2+"');";
+
+            db.execSQL(insterQuery);
+
+        }catch (Exception e){
+            System.out.println("FUCKING FAILED WHY FIX THIS YOU DUMBASS");
+        }
+
+
+
+    }
+
+    public ArrayList<String> getDatabase(String dataName, String uname){
+        ArrayList<String> ret = new ArrayList<String>();
+        db = this.getReadableDatabase();
+        String query = "SELECT namesave FROM savesearch WHERE savesearch.uname LIKE '" + uname + "';";
+        Cursor cursor = db.rawQuery(query, null);
+        System.out.println("count:" +cursor.getCount());
+        //System.out.println(cursor.moveToFirst());
+        if (cursor.moveToFirst()) {
+            do {
+                System.out.println("name:" + cursor.getString(0));
+                ret.add(cursor.getString(0));
+            }
+            while(cursor.moveToNext());
+        }
+        return ret;
+    }
 
     public String searchPass(String uname) {
         db = this.getReadableDatabase();
