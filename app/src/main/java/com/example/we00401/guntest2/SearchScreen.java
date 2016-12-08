@@ -12,14 +12,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.ExtractedText;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,9 +29,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import android.os.Handler;
-import android.os.Message;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 public class SearchScreen extends AppCompatActivity {
+    String username;
+    DatabaseHelper helper = new DatabaseHelper(this);
     boolean check = true;
     private Handler handler;
     private ProgressDialog pdialog;
@@ -87,6 +90,7 @@ public class SearchScreen extends AppCompatActivity {
         arrayList = new ArrayList<>();
         lv = (ListView) findViewById(R.id.foundView2);
 
+        username = getIntent().getStringExtra("username");
 
 
         runOnUiThread(new Runnable() {
